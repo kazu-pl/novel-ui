@@ -1,3 +1,5 @@
+// this file can't be normal *.ts or *.tsx file because it would become a part of output rollup build and would break typescript declaration paths in lib folder
+
 export type Args<Props> = {
   [Property in keyof Props]: Props[Property];
 };

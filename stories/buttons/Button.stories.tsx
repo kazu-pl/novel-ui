@@ -1,11 +1,14 @@
 import { Meta } from "@storybook/react/types-6-0";
 import { Story } from "@storybook/react";
-import Button, { ButtonProps } from "../src/buttons/Button";
+import Button, { ButtonProps } from "../../src/buttons/Button";
 import { BrowserRouter } from "react-router-dom";
-import { ArgType } from "../types/storybookArgs";
+import { ArgType } from "../../types/storybookArgs";
+
+import ColoredIconWrapper from "../../src/ColoredIconWrapper";
+import AddIcon from "@mui/icons-material/Add";
 
 // @ts-ignore
-import CodeBracketsSVG from "../stories/introduction/assets/code-brackets.svg";
+import CodeBracketsSVG from "../../stories/introduction/assets/code-brackets.svg";
 
 export default {
   title: "Buttons/Button",
@@ -71,4 +74,15 @@ AsReactRouterLink.args = {
   children: "Go to account sub-page",
   variant: "contained",
   to: "/account",
+} as ButtonProps;
+
+export const WithColoredIcon = Template.bind({});
+WithColoredIcon.args = {
+  children: "Go to account sub-page",
+  startIcon: (
+    <ColoredIconWrapper color="white" opacity={0.9}>
+      <AddIcon />
+    </ColoredIconWrapper>
+  ),
+  variant: "contained",
 } as ButtonProps;

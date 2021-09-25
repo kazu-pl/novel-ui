@@ -46,7 +46,7 @@ const initialValues: FormValues = {
   proffession: "",
 };
 
-export const FormikTextField = () => {
+export const FormikInputs = () => {
   const handleAsyncSubmit = (
     values: FormValues,
     actions: FormikHelpers<FormValues>

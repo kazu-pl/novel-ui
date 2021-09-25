@@ -3,6 +3,7 @@ import * as yup from "yup";
 import TextfieldFormik from "../../src/formik/TextFieldFormik";
 import Button from "../../src/buttons/Button";
 import CheckboxFormik from "../../src/formik/CheckboxFormik";
+import MenuItem from "@mui/material/MenuItem";
 
 import { Formik, Form, FormikHelpers } from "formik";
 
@@ -22,6 +23,7 @@ interface FormValues {
   interestedFields: string[];
   gender: string;
   note: string;
+  proffession: string;
 }
 
 const validationSchema = yup.object({
@@ -31,6 +33,7 @@ const validationSchema = yup.object({
   interestedFields: yup.array().of(yup.string()).min(1),
   gender: yup.string().required(),
   note: yup.string(),
+  proffession: yup.string().required(),
 });
 
 const initialValues: FormValues = {
@@ -40,6 +43,7 @@ const initialValues: FormValues = {
   interestedFields: [],
   gender: "",
   note: "",
+  proffession: "",
 };
 
 export const FormikTextField = () => {
@@ -65,7 +69,7 @@ export const FormikTextField = () => {
             <pre>{JSON.stringify(values, null, 2)}</pre>
           </Box>
 
-          <Box>
+          <Box pt={1} pb={1}>
             <TextfieldFormik
               name="name"
               type="text"
@@ -76,7 +80,7 @@ export const FormikTextField = () => {
             />
           </Box>
 
-          <Box>
+          <Box pt={1} pb={1}>
             <TextfieldFormik
               name="email"
               type="text"
@@ -86,7 +90,7 @@ export const FormikTextField = () => {
             />
           </Box>
 
-          <Box display="flex" flexDirection="column" mt={2}>
+          <Box display="flex" flexDirection="column" pt={1} pb={1}>
             <TextfieldFormik
               name="note"
               type="text"
@@ -96,6 +100,22 @@ export const FormikTextField = () => {
               rows={4}
               fullWidth
             />
+          </Box>
+
+          <Box display="flex" flexDirection="column" pt={1} pb={1}>
+            <TextfieldFormik
+              name="proffession"
+              select
+              id="proffession"
+              fullWidth
+              label="Proffession"
+            >
+              {["programmer", "designer", "project menager"].map((item) => (
+                <MenuItem key={item} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+            </TextfieldFormik>
           </Box>
 
           <Box pt={2} pb={2}>

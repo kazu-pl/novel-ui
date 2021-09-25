@@ -10,7 +10,12 @@ export type TextfieldProps = Omit<
   name: string;
 };
 
-const TextFieldFormik = ({ name, helperText, ...rest }: TextfieldProps) => {
+const TextFieldFormik = ({
+  name,
+  helperText,
+  clearable,
+  ...rest
+}: TextfieldProps) => {
   const [field, meta] = useField(name);
 
   return (
@@ -21,6 +26,7 @@ const TextFieldFormik = ({ name, helperText, ...rest }: TextfieldProps) => {
       onChange={field.onChange}
       error={meta.touched && !!meta.error}
       helperText={(meta.touched && meta.error) || helperText}
+      clearable={clearable || !!field.value}
       {...rest}
     />
   );

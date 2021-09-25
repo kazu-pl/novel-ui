@@ -10,10 +10,14 @@ import FormControlLabel, {
 export interface CheckboxFormikProps
   extends Omit<
     MuiCheckboxProps,
-    "name" | "onChange" | "onBlur" | "color" | "sx"
+    "name" | "onChange" | "onBlur" | "color" | "sx" | "checked" | "error"
   > {
   name: string;
   label?: React.ReactNode;
+  /**
+   * @remarks Value prop is passed if you want to use Checkbox as Radio
+   */
+  value?: string;
   labelPlacement?: FormControlLabelProps["labelPlacement"];
 }
 
@@ -21,7 +25,7 @@ const CheckboxFormik = ({
   label,
   labelPlacement = "end",
   name,
-  value, // value prop is passed if you want to use Checkbox as Radio Btn\
+  value,
   ...rest
 }: CheckboxFormikProps) => {
   const [field, meta, helpers] = useField(name);
@@ -68,5 +72,3 @@ const CheckboxFormik = ({
 };
 
 export default CheckboxFormik;
-
-// MuiFormControlLabel-label <== FormControlLabel musi byc styled-compoent i jak jest error to w sobie zmienić kolor elemetu o takiej klasie

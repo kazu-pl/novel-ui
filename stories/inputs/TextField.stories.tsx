@@ -9,6 +9,8 @@ import { Formik, Form, FormikHelpers } from "formik";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
+import RadioFormik from "../../src/formik/RadioFormik";
+
 export default {
   title: "Formik",
 } as Meta;
@@ -18,6 +20,8 @@ interface FormValues {
   email: string;
   isCodedAgreed: boolean;
   interestedFields: string[];
+  gender: string;
+  note: string;
 }
 
 const validationSchema = yup.object({
@@ -25,6 +29,8 @@ const validationSchema = yup.object({
   email: yup.string().email().required(),
   isCodedAgreed: yup.boolean().required().oneOf([true]),
   interestedFields: yup.array().of(yup.string()).min(1),
+  gender: yup.string().required(),
+  note: yup.string(),
 });
 
 const initialValues: FormValues = {
@@ -32,6 +38,8 @@ const initialValues: FormValues = {
   email: "",
   isCodedAgreed: false,
   interestedFields: [],
+  gender: "",
+  note: "",
 };
 
 export const FormikTextField = () => {
@@ -53,11 +61,11 @@ export const FormikTextField = () => {
     >
       {({ isSubmitting, values }) => (
         <Form>
-          <Box p={2}>
+          <Box>
             <pre>{JSON.stringify(values, null, 2)}</pre>
           </Box>
 
-          <Box p={2}>
+          <Box>
             <TextfieldFormik
               name="name"
               type="text"
@@ -68,7 +76,7 @@ export const FormikTextField = () => {
             />
           </Box>
 
-          <Box p={2}>
+          <Box>
             <TextfieldFormik
               name="email"
               type="text"
@@ -78,7 +86,19 @@ export const FormikTextField = () => {
             />
           </Box>
 
-          <Box p={2}>
+          <Box display="flex" flexDirection="column" mt={2}>
+            <TextfieldFormik
+              name="note"
+              type="text"
+              id="note"
+              multiline
+              placeholder="I would like to tell you that..."
+              rows={4}
+              fullWidth
+            />
+          </Box>
+
+          <Box pt={2} pb={2}>
             <CheckboxFormik
               name="isCodedAgreed"
               label="I agree with whatever you want from me"
@@ -86,7 +106,9 @@ export const FormikTextField = () => {
             />
           </Box>
 
-          <Typography>I'm interested in (select at least 1 item): </Typography>
+          <Typography variant="button">
+            I'm interested in (select at least 1 item):
+          </Typography>
           <Box>
             <CheckboxFormik
               name="interestedFields"
@@ -109,6 +131,19 @@ export const FormikTextField = () => {
               value="biology"
               label="Biology"
               labelPlacement="end"
+            />
+          </Box>
+
+          <Box display="flex" flexDirection="column" mt={2}>
+            <Typography variant="button">
+              My gender is (select one of below):
+            </Typography>
+            <RadioFormik name="gender" value="male" label="Male" />
+            <RadioFormik name="gender" value="female" label="Female" />
+            <RadioFormik
+              name="gender"
+              value="not specified"
+              label="I don't want to specify"
             />
           </Box>
 

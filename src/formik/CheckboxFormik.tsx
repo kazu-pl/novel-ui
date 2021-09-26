@@ -15,7 +15,7 @@ export interface CheckboxFormikProps
   name: string;
   label?: React.ReactNode;
   /**
-   * @remarks Value prop is passed if you want to use Checkbox as Radio
+   * @remarks Value prop is passed if you want to use Checkbox to check multiple options
    */
   value?: string;
   labelPlacement?: FormControlLabelProps["labelPlacement"];

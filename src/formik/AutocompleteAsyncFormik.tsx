@@ -29,7 +29,7 @@ const AutocompleteAsyncFormik = <T extends Option>({
   name,
   helperText,
   noOptionsText,
-  needMoreSingsText = "type more characters",
+  needMoreSingsText = "Type more characters",
   singsNumberToStartFetching = 3,
   setOptionsOnInputChange,
   fetchOptionsOnInputChange,

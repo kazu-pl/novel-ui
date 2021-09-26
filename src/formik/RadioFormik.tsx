@@ -2,11 +2,11 @@ import { useField } from "formik";
 import FormControlLabel, {
   FormControlLabelProps,
 } from "@mui/material/FormControlLabel";
-import MuiRadio, { RadioProps as MuiRadioProps } from "../inputs/Radio";
+import Radio, { RadioProps } from "../inputs/Radio";
 
 export interface RadioFormikProps
   extends Omit<
-    MuiRadioProps,
+    RadioProps,
     "name" | "sx" | "value" | "checked" | "onChange" | "onBlur" | "error"
   > {
   name: string;
@@ -37,7 +37,7 @@ const RadioFormik = ({
         },
       }}
       control={
-        <MuiRadio
+        <Radio
           name={field.name}
           checked={field.value === value}
           value={value}

@@ -134,11 +134,11 @@ export const FormikInputs = () => {
                 I'm interested in (select at least 1 item):
               </Typography>
               <Box>
+                {/* CHECKBOXES used to check multiple options must have the same name but different values */}
                 <CheckboxFormik
                   name="interestedFields"
                   value="astronomy"
                   label="Astronomy"
-                  labelPlacement="end"
                 />
               </Box>
               <Box>
@@ -146,7 +146,6 @@ export const FormikInputs = () => {
                   name="interestedFields"
                   value="math"
                   label="Math"
-                  labelPlacement="end"
                 />
               </Box>
               <Box>
@@ -154,7 +153,6 @@ export const FormikInputs = () => {
                   name="interestedFields"
                   value="biology"
                   label="Biology"
-                  labelPlacement="end"
                 />
               </Box>
 
@@ -162,6 +160,7 @@ export const FormikInputs = () => {
                 <Typography variant="button">
                   My gender is (select one of below):
                 </Typography>
+                {/* RADIO must have the same name but different values */}
                 <RadioFormik name="gender" value="male" label="Male" />
                 <RadioFormik name="gender" value="female" label="Female" />
                 <RadioFormik

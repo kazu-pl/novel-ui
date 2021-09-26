@@ -3,7 +3,7 @@ import MuiTextField, {
 } from "@mui/material/TextField";
 import { StyledEmptyMenuItem } from "./TextField.styled";
 
-export type TextfieldProps = MuiTextFieldProps & {
+export type TextFieldProps = MuiTextFieldProps & {
   clearable?: boolean;
   clearItemText?: string;
 };
@@ -14,7 +14,7 @@ const TextField = ({
   clearable,
   clearItemText = "Clear input",
   ...rest
-}: TextfieldProps) => {
+}: TextFieldProps) => {
   return (
     <MuiTextField
       select={select}

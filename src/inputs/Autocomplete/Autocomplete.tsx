@@ -1,7 +1,7 @@
 import MuiAutocomplete, {
   AutocompleteProps as MuiAutocompleteProps,
 } from "@mui/material/Autocomplete";
-import TextField, { TextfieldProps } from "../TextField";
+import TextField, { TextFieldProps } from "../TextField";
 
 export interface Option {
   id: string | number;
@@ -17,7 +17,7 @@ export interface AutocompleteProps<T>
   error?: boolean;
   helperText?: string;
   inputAutoComplete?: string;
-  TextFieldInputProps?: TextfieldProps["InputProps"];
+  TextFieldInputProps?: TextFieldProps["InputProps"];
 }
 
 const Autocomplete = <T extends Option>({

@@ -91,3 +91,29 @@ WithoutAvatarPhoto.args = {
     },
   ],
 } as AppBarProps;
+
+export const WithNotifyList = Template.bind({});
+WithNotifyList.args = {
+  logo: <AcUnitSharp />,
+  userData: {
+    name: "John",
+    surname: "Doe",
+    job: "Programmer",
+  },
+  userDropdown: [
+    {
+      label: "Account",
+      to: "/account",
+    },
+    {
+      label: "Settings",
+      to: "/settings",
+    },
+    {
+      label: "Logout",
+      to: "/logout",
+    },
+  ],
+  showNotifications: true,
+  newNotificationsCounter: 5,
+} as AppBarProps;

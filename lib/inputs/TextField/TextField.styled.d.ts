@@ -1,0 +1,1 @@
+export declare const StyledEmptyMenuItem: import("styled-components").StyledComponent<import("@mui/material").ExtendButtonBase<import("@mui/material/MenuItem").MenuItemTypeMap<{}, "li">>, import("styled-components").DefaultTheme, {}, never>;

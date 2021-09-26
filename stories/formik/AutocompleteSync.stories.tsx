@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import AutocompleteSyncFormik from "../../src/formik/AutocompleteSyncFormik";
 
 export default {
-  title: "FormikAutocompleteSync",
+  title: "Formik/FormikAutocompleteSync",
 } as Meta;
 
 interface Country {
@@ -98,24 +98,27 @@ export const AutocompleteSyncWithFormik = () => {
     >
       {({ isSubmitting, values }) => (
         <Form>
-          <Box>
-            <pre>{JSON.stringify(values, null, 2)}</pre>
-          </Box>
-
-          <Box pb={4} pt={4}>
-            <Typography variant="button">select your country:</Typography>
-          </Box>
-
-          <AutocompleteSyncFormik
-            inputLabel="Coutry"
-            name="coutry"
-            options={countries}
-          />
-
-          <Box p={2} display="flex" justifyContent="flex-end">
-            <Button variant="contained" type="submit" isLoading={isSubmitting}>
-              Submit
-            </Button>
+          <Box maxWidth="800px">
+            <Box boxShadow={2} p={2}>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
+            </Box>
+            <Box pb={4} pt={4}>
+              <Typography variant="button">select your country:</Typography>
+            </Box>
+            <AutocompleteSyncFormik
+              inputLabel="Coutry"
+              name="coutry"
+              options={countries}
+            />
+            <Box p={2} display="flex" justifyContent="flex-end">
+              <Button
+                variant="contained"
+                type="submit"
+                isLoading={isSubmitting}
+              >
+                Submit
+              </Button>
+            </Box>
           </Box>
         </Form>
       )}

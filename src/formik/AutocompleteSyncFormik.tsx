@@ -13,6 +13,7 @@ export interface AutocompleteSyncFormikProps<T>
     | "isOptionEqualToValue"
     | "inputValue"
     | "onInputChange"
+    | "TextFieldInputProps"
   > {
   name: string;
   inputLabel: string;
@@ -21,7 +22,6 @@ export interface AutocompleteSyncFormikProps<T>
 const AutocompleteSyncFormik = <T extends Option>({
   name,
   helperText,
-  inputLabel,
   ...rest
 }: AutocompleteSyncFormikProps<T>) => {
   const [field, meta, helpers] = useField(name);
@@ -33,7 +33,6 @@ const AutocompleteSyncFormik = <T extends Option>({
       }}
       getOptionLabel={(option) => option && option.label}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      inputLabel={inputLabel}
       helperText={(meta.touched && meta.error) || helperText}
       error={meta.touched && !!meta.error}
       {...rest}

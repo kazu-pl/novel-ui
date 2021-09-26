@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import RadioFormik from "../../src/formik/RadioFormik";
 
 export default {
-  title: "Formik",
+  title: "Formik/BasicInputs",
 } as Meta;
 
 interface FormValues {
@@ -65,108 +65,113 @@ export const FormikInputs = () => {
     >
       {({ isSubmitting, values }) => (
         <Form>
-          <Box>
+          <Box boxShadow={2} p={2} mb={2}>
             <pre>{JSON.stringify(values, null, 2)}</pre>
           </Box>
 
-          <Box pt={1} pb={1}>
-            <TextfieldFormik
-              name="name"
-              type="text"
-              id="name"
-              label="Enter Your Name"
-              helperText="Custom helper text"
-              fullWidth
-            />
-          </Box>
+          <Box display="flex">
+            <Box flexGrow={1} pr={4}>
+              <Box pt={1} pb={1}>
+                <TextfieldFormik
+                  name="name"
+                  type="text"
+                  id="name"
+                  label="Enter Your Name"
+                  helperText="Custom helper text"
+                  fullWidth
+                />
+              </Box>
 
-          <Box pt={1} pb={1}>
-            <TextfieldFormik
-              name="email"
-              type="text"
-              id="email"
-              label="Enter Your email"
-              fullWidth
-            />
-          </Box>
+              <Box pt={1} pb={1}>
+                <TextfieldFormik
+                  name="email"
+                  type="text"
+                  id="email"
+                  label="Enter Your email"
+                  fullWidth
+                />
+              </Box>
 
-          <Box display="flex" flexDirection="column" pt={1} pb={1}>
-            <TextfieldFormik
-              name="note"
-              type="text"
-              id="note"
-              multiline
-              placeholder="I would like to tell you that..."
-              rows={4}
-              fullWidth
-            />
-          </Box>
+              <Box display="flex" flexDirection="column" pt={1} pb={1}>
+                <TextfieldFormik
+                  name="note"
+                  type="text"
+                  id="note"
+                  multiline
+                  placeholder="I would like to tell you that..."
+                  rows={4}
+                  fullWidth
+                />
+              </Box>
 
-          <Box display="flex" flexDirection="column" pt={1} pb={1}>
-            <TextfieldFormik
-              name="proffession"
-              select
-              id="proffession"
-              fullWidth
-              label="Proffession"
-            >
-              {["programmer", "designer", "project menager"].map((item) => (
-                <MenuItem key={item} value={item}>
-                  {item}
-                </MenuItem>
-              ))}
-            </TextfieldFormik>
-          </Box>
+              <Box display="flex" flexDirection="column" pt={1} pb={1}>
+                <TextfieldFormik
+                  name="proffession"
+                  select
+                  id="proffession"
+                  fullWidth
+                  label="Proffession"
+                >
+                  {["programmer", "designer", "project menager"].map((item) => (
+                    <MenuItem key={item} value={item}>
+                      {item}
+                    </MenuItem>
+                  ))}
+                </TextfieldFormik>
+              </Box>
 
-          <Box pt={2} pb={2}>
-            <CheckboxFormik
-              name="isCodedAgreed"
-              label="I agree with whatever you want from me"
-              labelPlacement="end"
-            />
-          </Box>
+              <Box pt={2} pb={2}>
+                <CheckboxFormik
+                  name="isCodedAgreed"
+                  label="I agree with whatever you want from me"
+                  labelPlacement="end"
+                />
+              </Box>
+            </Box>
 
-          <Typography variant="button">
-            I'm interested in (select at least 1 item):
-          </Typography>
-          <Box>
-            <CheckboxFormik
-              name="interestedFields"
-              value="astronomy"
-              label="Astronomy"
-              labelPlacement="end"
-            />
-          </Box>
-          <Box>
-            <CheckboxFormik
-              name="interestedFields"
-              value="math"
-              label="Math"
-              labelPlacement="end"
-            />
-          </Box>
-          <Box>
-            <CheckboxFormik
-              name="interestedFields"
-              value="biology"
-              label="Biology"
-              labelPlacement="end"
-            />
-          </Box>
+            <Box>
+              <Typography variant="button">
+                I'm interested in (select at least 1 item):
+              </Typography>
+              <Box>
+                <CheckboxFormik
+                  name="interestedFields"
+                  value="astronomy"
+                  label="Astronomy"
+                  labelPlacement="end"
+                />
+              </Box>
+              <Box>
+                <CheckboxFormik
+                  name="interestedFields"
+                  value="math"
+                  label="Math"
+                  labelPlacement="end"
+                />
+              </Box>
+              <Box>
+                <CheckboxFormik
+                  name="interestedFields"
+                  value="biology"
+                  label="Biology"
+                  labelPlacement="end"
+                />
+              </Box>
 
-          <Box display="flex" flexDirection="column" mt={2}>
-            <Typography variant="button">
-              My gender is (select one of below):
-            </Typography>
-            <RadioFormik name="gender" value="male" label="Male" />
-            <RadioFormik name="gender" value="female" label="Female" />
-            <RadioFormik
-              name="gender"
-              value="not specified"
-              label="I don't want to specify"
-            />
+              <Box display="flex" flexDirection="column" mt={2}>
+                <Typography variant="button">
+                  My gender is (select one of below):
+                </Typography>
+                <RadioFormik name="gender" value="male" label="Male" />
+                <RadioFormik name="gender" value="female" label="Female" />
+                <RadioFormik
+                  name="gender"
+                  value="not specified"
+                  label="I don't want to specify"
+                />
+              </Box>
+            </Box>
           </Box>
-
           <Box p={2} display="flex" justifyContent="flex-end">
             <Button variant="contained" type="submit" isLoading={isSubmitting}>
               Submit

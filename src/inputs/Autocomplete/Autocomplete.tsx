@@ -1,7 +1,7 @@
 import MuiAutocomplete, {
   AutocompleteProps as MuiAutocompleteProps,
 } from "@mui/material/Autocomplete";
-import TextField from "../TextField";
+import TextField, { TextfieldProps } from "../TextField";
 
 export interface Option {
   id: string | number;
@@ -17,6 +17,7 @@ export interface AutocompleteProps<T>
   error?: boolean;
   helperText?: string;
   inputAutoComplete?: string;
+  TextFieldInputProps?: TextfieldProps["InputProps"];
 }
 
 const Autocomplete = <T extends Option>({
@@ -25,22 +26,27 @@ const Autocomplete = <T extends Option>({
   helperText,
   inputAutoComplete = "new-password",
   autoHighlight = true,
-  noOptionsText = "No matcihng elements",
+  noOptionsText = "No matching elements",
+  TextFieldInputProps,
   ...rest
 }: AutocompleteProps<T>) => {
   return (
     <MuiAutocomplete
       autoHighlight={autoHighlight}
       noOptionsText={noOptionsText}
-      renderInput={(params) => (
+      renderInput={({ InputProps, ...rest }) => (
         <TextField
-          {...params}
+          {...rest}
           label={inputLabel}
           error={error}
           helperText={helperText}
           inputProps={{
-            ...params.inputProps,
+            ...rest.inputProps,
             autoComplete: inputAutoComplete,
+          }}
+          InputProps={{
+            ...InputProps,
+            ...TextFieldInputProps,
           }}
         />
       )}

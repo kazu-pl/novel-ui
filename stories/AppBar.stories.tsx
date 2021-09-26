@@ -37,8 +37,8 @@ Basic.args = {
       to: "/settings",
     },
     {
-      label: "Avatar",
-      to: "/avatar",
+      label: "Logout",
+      to: "/logout",
     },
   ],
 } as AppBarProps;
@@ -62,8 +62,8 @@ WithLogo.args = {
       to: "/settings",
     },
     {
-      label: "Avatar",
-      to: "/avatar",
+      label: "Logout",
+      to: "/logout",
     },
   ],
 } as AppBarProps;
@@ -86,8 +86,8 @@ WithoutAvatarPhoto.args = {
       to: "/settings",
     },
     {
-      label: "Avatar",
-      to: "/avatar",
+      label: "Logout",
+      to: "/logout",
     },
   ],
 } as AppBarProps;

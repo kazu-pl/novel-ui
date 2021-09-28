@@ -14,11 +14,10 @@ import Typography from "@mui/material/Typography";
 
 export interface DashboardProps {
   sidebarProps: SidebarProps;
-  appBarProps: Omit<AppBarProps, "additionalControls">;
+  appBarProps: AppBarProps;
   bgColor?: string;
   children: React.ReactNode;
   title: string;
-  additionalControls?: React.ReactNode;
 }
 
 const Dashboard = ({
@@ -27,8 +26,12 @@ const Dashboard = ({
   bgColor,
   children,
   title,
-  additionalControls,
 }: DashboardProps) => {
+  const {
+    additionalControls: additionalAppBarControls,
+    ...restOfAppBarProps
+  } = appBarProps;
+
   const [isSidebarOpenOnMobile, setIsSidebarOpenOnMobile] = useState(false);
 
   const toggleDrawer = (open: boolean) => (
@@ -68,10 +71,10 @@ const Dashboard = ({
                 </ColoredIconWrapper>
               </IconButton>
             </StyledToggleMobileMenuIconWrapper>
-            {additionalControls}
+            {additionalAppBarControls}
           </>
         }
-        {...appBarProps}
+        {...restOfAppBarProps}
       />
 
       <Box display="flex" flexGrow={1} flexDirection="row">

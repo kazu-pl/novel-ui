@@ -21,6 +21,22 @@ import LangSwitcher from "../../src/LangSwitcher";
 // @ts-ignore
 import codeBracketsSVGUrl from "../../stories/introduction/assets/code-brackets.svg";
 
+const FlagWrapper = ({ src, alt }: { src: string; alt: string }) => {
+  return (
+    <div
+      style={{
+        width: 20, // set the same height as width if want to use in appBar
+        height: 20, // because when click on lang btn, MUI will create oval clicked shape (should be circle)
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <img src={src} alt={alt} width={20} />
+    </div>
+  );
+};
+
 export default {
   title: "Layout/Dashboard",
   component: Dashboard,
@@ -46,86 +62,53 @@ const Template: Story<DashboardProps> = (args) => (
 export const Basic = Template.bind({});
 Basic.args = {
   title: "Dashboard",
-  additionalControls: (
-    <>
-      <LangSwitcher
-        activeLang="pl"
-        langs={[
-          {
-            icon: (
-              <div
-                style={{
-                  width: 20,
-                  height: 20,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg"
-                  alt="de"
-                  width={20}
-                />
-              </div>
-            ),
-            to: "/de",
-            lang: "de",
-            label: "Germany",
-          },
-          {
-            icon: (
-              <div
-                style={{
-                  width: 20,
-                  height: 20,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/en/1/12/Flag_of_Poland.svg"
-                  alt="pl"
-                  width={20}
-                />
-              </div>
-            ),
-            to: "/pl",
-            lang: "pl",
-            label: "Polski",
-          },
-          {
-            icon: (
-              <div
-                style={{
-                  width: 20,
-                  height: 20,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Flag_of_the_United_Kingdom.svg"
-                  alt="en"
-                  width={20}
-                />
-              </div>
-            ),
-            to: "/en",
-            lang: "en",
-            label: "English",
-          },
-        ]}
-      />
-    </>
-  ),
   appBarProps: {
     logo: (
       <ColoredIconWrapper color="white">
         <img src={codeBracketsSVGUrl} alt="logo" width={45} />
       </ColoredIconWrapper>
+    ),
+    additionalControls: (
+      <>
+        <LangSwitcher
+          activeLang="pl"
+          langs={[
+            {
+              icon: (
+                <FlagWrapper
+                  src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg"
+                  alt="de"
+                />
+              ),
+              to: "/de",
+              lang: "de",
+              label: "Germany",
+            },
+            {
+              icon: (
+                <FlagWrapper
+                  src="https://upload.wikimedia.org/wikipedia/en/1/12/Flag_of_Poland.svg"
+                  alt="pl"
+                />
+              ),
+              to: "/pl",
+              lang: "pl",
+              label: "Polski",
+            },
+            {
+              icon: (
+                <FlagWrapper
+                  src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Flag_of_the_United_Kingdom.svg"
+                  alt="en"
+                />
+              ),
+              to: "/en",
+              lang: "en",
+              label: "English",
+            },
+          ]}
+        />
+      </>
     ),
     userData: {
       title: "Johnattan Bowen",

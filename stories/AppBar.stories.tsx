@@ -1,11 +1,19 @@
 import { Meta } from "@storybook/react/types-6-0";
 import { Story } from "@storybook/react";
-import AcUnitSharp from "@mui/icons-material/AcUnitSharp";
+
 import { BrowserRouter } from "react-router-dom";
-
 import { ArgType } from "../types/storybookArgs";
-
 import AppBar, { AppBarProps } from "../src/AppBar";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+
+import IconButton from "@mui/material/IconButton";
+import LanguageIcon from "@mui/icons-material/Language";
+import ColoredIconWrapper from "../src/ColoredIconWrapper";
+
+// @ts-ignore
+import codeBracketsSVGUrl from "../stories/introduction/assets/code-brackets.svg";
 
 export default {
   title: "Layout/AppBar",
@@ -23,9 +31,7 @@ export const Basic = Template.bind({});
 Basic.args = {
   userData: {
     avatarLink: "https://mui.com/static/images/avatar/1.jpg",
-    name: "John",
-    surname: "Doe",
-    job: "Programmer",
+    title: "John Doe",
   },
   userDropdown: [
     {
@@ -45,12 +51,10 @@ Basic.args = {
 
 export const WithLogo = Template.bind({});
 WithLogo.args = {
-  logo: <AcUnitSharp />,
+  logo: <img src={codeBracketsSVGUrl} alt="logo" width={50} />,
   userData: {
     avatarLink: "https://mui.com/static/images/avatar/1.jpg",
-    name: "John",
-    surname: "Doe",
-    job: "Programmer",
+    title: "John Doe",
   },
   userDropdown: [
     {
@@ -70,11 +74,9 @@ WithLogo.args = {
 
 export const WithoutAvatarPhoto = Template.bind({});
 WithoutAvatarPhoto.args = {
-  logo: <AcUnitSharp />,
+  logo: <img src={codeBracketsSVGUrl} alt="logo" width={50} />,
   userData: {
-    name: "John",
-    surname: "Doe",
-    job: "Programmer",
+    title: "John Doe",
   },
   userDropdown: [
     {
@@ -92,13 +94,12 @@ WithoutAvatarPhoto.args = {
   ],
 } as AppBarProps;
 
-export const WithNotifyList = Template.bind({});
-WithNotifyList.args = {
-  logo: <AcUnitSharp />,
+export const WithNotifyIcon = Template.bind({});
+WithNotifyIcon.args = {
+  logo: <img src={codeBracketsSVGUrl} alt="logo" width={50} />,
   userData: {
-    name: "John",
-    surname: "Doe",
-    job: "Programmer",
+    avatarLink: "https://mui.com/static/images/avatar/1.jpg",
+    title: "John Doe",
   },
   userDropdown: [
     {
@@ -116,4 +117,67 @@ WithNotifyList.args = {
   ],
   showNotifications: true,
   newNotificationsCounter: 5,
+} as AppBarProps;
+
+export const UserMenu = Template.bind({});
+UserMenu.args = {
+  logo: <img src={codeBracketsSVGUrl} alt="logo" width={50} />,
+  userData: {
+    avatarLink: "https://mui.com/static/images/avatar/1.jpg",
+    title: "John Doe",
+  },
+  userDropdown: [
+    {
+      label: "Account",
+      to: "/account",
+      icon: <AccountCircleIcon />,
+    },
+    {
+      label: "Settings",
+      to: "/settings",
+      icon: <SettingsIcon />,
+    },
+    {
+      label: "Logout",
+      to: "/logout",
+      icon: <ExitToAppIcon />,
+      isErrorColor: true,
+    },
+  ],
+} as AppBarProps;
+
+export const AdditionalControls = Template.bind({});
+AdditionalControls.args = {
+  logo: <img src={codeBracketsSVGUrl} alt="logo" width={50} />,
+  userData: {
+    avatarLink: "https://mui.com/static/images/avatar/1.jpg",
+    title: "John Doe",
+  },
+  userDropdown: [
+    {
+      label: "Account",
+      to: "/account",
+      icon: <AccountCircleIcon />,
+    },
+    {
+      label: "Settings",
+      to: "/settings",
+      icon: <SettingsIcon />,
+    },
+    {
+      label: "Logout",
+      to: "/logout",
+      icon: <ExitToAppIcon />,
+      isErrorColor: true,
+    },
+  ],
+  additionalControls: (
+    <>
+      <IconButton>
+        <ColoredIconWrapper color="white">
+          <LanguageIcon />
+        </ColoredIconWrapper>
+      </IconButton>
+    </>
+  ),
 } as AppBarProps;

@@ -1,11 +1,33 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { NavLink } from "react-router-dom";
 import Divider from "@mui/material/Divider";
+import { alpha } from "@mui/material/styles";
+
+const commonLinkStyles = css`
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: ${({ theme }) => theme.palette.text.primary};
+`;
+
+const hoverLinkStyles = css`
+  background-color: ${({ theme }) => alpha(theme.palette.primary.light, 0.1)};
+  border-radius: 8px;
+`;
+
+const activeLinkStyles = css`
+  background-color: ${({ theme }) => alpha(theme.palette.primary.light, 0.2)};
+  border-radius: 8px;
+`;
 
 export const StyledListItemText = styled(ListItemText)`
-  color: rgba(255, 255, 255, 1);
+  color: ${({ theme }) => theme.palette.text.primary};
 `;
 
 export const StyledListItemIcon = styled(ListItemIcon)`
@@ -18,44 +40,27 @@ interface StyledLinkProps {
 }
 
 export const StyledLink = styled(NavLink)<StyledLinkProps>`
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  ${commonLinkStyles}
   padding: 8px 16px 8px ${({ $asSubmenuItem }) => ($asSubmenuItem ? 48 : 8)}px;
-  text-align: left;
-  box-sizing: border-box;
-  text-decoration: none;
-  color: rgba(255, 255, 255, 1);
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    ${hoverLinkStyles}
   }
 
   &.active {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
+    ${activeLinkStyles}
   }
 `;
 
 export const StyledListItemButton = styled.button`
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  ${commonLinkStyles}
   padding: 8px;
-  text-align: left;
-  box-sizing: border-box;
-  text-decoration: none;
   cursor: pointer;
   background: none;
   border: none;
-  color: rgba(255, 255, 255, 1);
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    ${hoverLinkStyles}
   }
 `;
 
@@ -64,5 +69,5 @@ export const StyledDividerWrapper = styled.div`
 `;
 
 export const StyledDivider = styled(Divider)`
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: ${({ theme }) => theme.palette.grey[300]};
 `;

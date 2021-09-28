@@ -1,20 +1,19 @@
 /// <reference types="react" />
-import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 export interface AppBarProps {
     logo?: React.ReactNode;
-    bgColor?: MuiAppBarProps["color"];
     userData: {
         avatarLink?: string;
-        name: string;
-        surname?: string;
-        job: string;
+        title: string;
     };
     userDropdown: {
         label: string;
         to: string;
+        icon: React.ReactNode;
+        isErrorColor?: boolean;
     }[];
     newNotificationsCounter?: number;
     showNotifications?: boolean;
+    additionalControls?: React.ReactNode;
 }
-declare const AppBarLayout: ({ logo, bgColor, userData, userDropdown, newNotificationsCounter, showNotifications, }: AppBarProps) => JSX.Element;
+declare const AppBarLayout: ({ logo, userData, userDropdown, newNotificationsCounter, showNotifications, additionalControls, }: AppBarProps) => JSX.Element;
 export default AppBarLayout;

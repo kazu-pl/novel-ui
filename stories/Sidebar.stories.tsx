@@ -2,7 +2,6 @@ import { Meta } from "@storybook/react/types-6-0";
 import { Story } from "@storybook/react";
 import ColoredIconWrapper from "../src/ColoredIconWrapper";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { BrowserRouter } from "react-router-dom";
@@ -28,16 +27,11 @@ const Template: Story<SidebarProps> = (args) => (
 
 export const Basic = Template.bind({});
 Basic.args = {
-  logo: (
-    <ColoredIconWrapper color="white">
-      <AddAPhotoIcon />
-    </ColoredIconWrapper>
-  ),
   sidebarItems: [
     {
       variant: "no-dropdown",
       icon: (
-        <ColoredIconWrapper color="white">
+        <ColoredIconWrapper color="grey">
           <DashboardIcon />
         </ColoredIconWrapper>
       ),
@@ -47,7 +41,7 @@ Basic.args = {
     {
       variant: "no-dropdown",
       icon: (
-        <ColoredIconWrapper color="white">
+        <ColoredIconWrapper color="grey">
           <NotificationsIcon />
         </ColoredIconWrapper>
       ),
@@ -58,7 +52,7 @@ Basic.args = {
     {
       variant: "with-dropdown",
       icon: (
-        <ColoredIconWrapper color="white">
+        <ColoredIconWrapper color="grey">
           <InboxIcon />
         </ColoredIconWrapper>
       ),

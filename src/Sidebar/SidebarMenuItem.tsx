@@ -57,11 +57,11 @@ const SidebarMenuItem = (props: SidebarMenuItemProps) => {
         <StyledListItemIcon>{props.icon}</StyledListItemIcon>
         <StyledListItemText primary={props.label} color="#ffffff" />
         {isSubmenuOpen ? (
-          <ColoredIconWrapper color="white">
+          <ColoredIconWrapper color="grey">
             <ExpandLess />
           </ColoredIconWrapper>
         ) : (
-          <ColoredIconWrapper color="white">
+          <ColoredIconWrapper color="grey">
             <ExpandMore />
           </ColoredIconWrapper>
         )}

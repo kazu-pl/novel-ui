@@ -3,7 +3,7 @@ import { ButtonProps } from "../buttons/Button";
 import { StyledColoredIconWrapper } from "./ColoredIconWrapper.styled";
 
 export interface ColoredIconWrapperProps {
-  color?: ButtonProps["color"] | "white";
+  color?: ButtonProps["color"] | "white" | "grey";
   /**
    * If opacity is specified it must be a number between 0 and 1
    */

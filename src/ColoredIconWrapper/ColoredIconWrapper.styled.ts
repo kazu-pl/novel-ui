@@ -2,12 +2,13 @@ import styled, { css } from "styled-components";
 import { ButtonProps } from "../buttons/Button";
 
 interface StyledColoredIconWrapperProps {
-  color?: ButtonProps["color"] | "white";
+  color?: ButtonProps["color"] | "white" | "grey";
   opacity?: number;
 }
 
 const getFillColor = css<StyledColoredIconWrapperProps>`
   fill: ${({ color = "primary", theme }) => {
+    if (color === "grey") return `${theme.palette.grey[700]}`;
     if (color === "inherit") return "inherit";
     if (color === "white") return "rgba(255,255,255,1)";
     return theme.palette[color].main;

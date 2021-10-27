@@ -2,7 +2,13 @@ import { Bar } from "react-chartjs-2";
 import { ChartData, ChartOptions } from "chart.js";
 
 export interface BarChartProps {
+  /**
+   * @todo THIS COMPONENT IS NOT FULLY READY YET.
+   */
   data: ChartData;
+  /**
+   * @todo THIS COMPONENT IS NOT FULLY READY YET.
+   */
   options?: ChartOptions;
 }
 

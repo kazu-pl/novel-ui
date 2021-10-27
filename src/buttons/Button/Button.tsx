@@ -24,6 +24,17 @@ export interface ButtonProps extends MuiButtonProps, ButtonAsLinksProps {
   isLoading?: boolean;
   onClickPromise?: () => Promise<void>;
   textTransform?: TextTransform;
+  /**
+   * component prop describes underlaying HTML tag.
+   *
+   * However, this prop will be ignored if:
+   * - prop `to` is passed - then `Link` from `react-router-dom` will be used
+   * - prop `href` is passed - then if `component` will be `a` tag
+   *
+   * @example
+   * component="span"
+   */
+  component?: string;
 }
 
 const Button = forwardRef(
@@ -39,6 +50,7 @@ const Button = forwardRef(
       target,
       to,
       textTransform = "uppercase",
+      component,
       ...rest
     }: ButtonProps,
     ref: ForwardedRef<HTMLButtonElement>
@@ -71,7 +83,7 @@ const Button = forwardRef(
           ref={ref}
           target={target}
           onClick={handleBtnClick}
-          component={to ? Link : undefined}
+          component={to ? Link : component || undefined}
           to={to}
           $textTransform={textTransform}
           {...rest}

@@ -1,3 +1,19 @@
+# What git merge method choose to merge develop into master branch:
+
+If you have some branch `A` that contains only release versions (for example: `master`) and another branch `B` that develops new features (for example: `develop`) then if you want to publish new features from develop to master you should choose normal merge request method (on gitub it's called `Create merge request`) instead of `squash merge`.
+
+If you choose squash commit in that situation, then your next merge request from develop into master will give you many conflicts.
+If it will happen, you will need to rebase develop branch and accept every change as `current changes` (which are develop changes).
+It can be done in one single command. Assuming you're on `develop` branch and want to rebase:
+`git rebase -Xtheirs master`
+
+more [here](https://demisx.github.io/git/rebase/2015/07/02/git-rebase-keep-my-branch-changes.html) about that command.
+
+In general, if you have branch that continuously develops new things and merges them into another branch, its better to merge that changes with normal merge request.
+
+But on the other hand, it does not apply to `feature/` branches because once they're merged into `develop` the should be destroyed and if another change is needed, then you should create new `feature/` or `fix/` branch.
+So, if you're merging `feature/` branch into `develop` you can choose `squash` merge if you want (or stick to normal method) because that problem with conflicts will never appear becuase `feature/` branch will be removed afterwards anyway (or at least it should be removed) and won't develop new things so it doesn't matter.
+
 # 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
 
 you need to change `"jsx": "react"` to `"jsx": "react-jsx"` in `tsconfig.json`.

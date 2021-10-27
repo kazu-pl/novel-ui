@@ -1,6 +1,8 @@
 /// <reference types="react" />
-export interface TextfieldProps {
-    isAvtive?: boolean;
-}
-declare const TextField: ({ isAvtive }: TextfieldProps) => JSX.Element;
+import { TextFieldProps as MuiTextFieldProps } from "@mui/material/TextField";
+export declare type TextFieldProps = MuiTextFieldProps & {
+    clearable?: boolean;
+    clearItemText?: string;
+};
+declare const TextField: ({ select, children, clearable, clearItemText, ...rest }: TextFieldProps) => JSX.Element;
 export default TextField;

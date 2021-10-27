@@ -5,7 +5,7 @@ import typescript from "rollup-plugin-typescript2";
 import postcss from "rollup-plugin-postcss";
 import multiInput from "rollup-plugin-multi-input";
 
-export default {
+const rollupConfig = {
   input: ["src/**/*.tsx", "src/**/index.ts"],
   output: {
     format: "esm", // "esm" | "ejs"
@@ -22,3 +22,5 @@ export default {
     }),
   ],
 };
+
+export default rollupConfig;

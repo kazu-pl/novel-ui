@@ -1,5 +1,10 @@
-import { StylesProvider, MuiThemeProvider } from "@material-ui/core/styles";
+import {
+  ThemeProvider as MuiThemeProvider,
+  StyledEngineProvider,
+} from "@mui/material/styles";
+// import { StylesProvider } from "@mui/styled-engine-sc/modern";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import CssBaseline from "@mui/material/CssBaseline";
 
 import theme from "../theme/muiTheme";
 
@@ -16,10 +21,13 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <StylesProvider injectFirst>
+    <StyledEngineProvider injectFirst>
       <MuiThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme}>{Story()}</StyledThemeProvider>
+        <StyledThemeProvider theme={theme}>
+          <CssBaseline />
+          {Story()}
+        </StyledThemeProvider>
       </MuiThemeProvider>
-    </StylesProvider>
+    </StyledEngineProvider>
   ),
 ];

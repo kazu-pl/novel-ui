@@ -144,6 +144,25 @@ export default CustomExample;
 
 ```
 
+# How to create input type file with formik or other form library:
+
+Basucally, `<input type="file" />` is uncontrolled component and you can't set its value. To get value from uncontrolled component you can create ref and pass it to that `<input />` so you can read that ref value.
+What you have to do is create an object or array ob objects in formik that will contain selected files, pass that value to component that returns `<input />` and loop over the array to show selected items.
+On every `onChange` of input, you receive selected items, update formik state, pass that state to the component and in that component show items for every item from array.
+When you submit, you will get that array from formik but you don't need that. In submit function you will check the `inputRef` files, create `formData` and append to it all files you can find in the input ref.
+
+HOW TO CUSTOMIZE INPUT FILE:
+You can hide original input file but you should add `id` to it, so you can use `label` for the same id and wrap it around your custom styled button or div. IMPORTANT: you can't use `<button/>` component inside `label` because when you will click on that, you will trigger that button click action, not the input triger action. The easiest way is to just use `span` that looks like a button:
+
+```
+<input id="file_id" type="file" hidden ref={inputRef} {...rest} />
+  <InputLabel htmlFor="file_id">
+    <Button component="span" {...buttonProps}>
+      {text}
+    </Button>
+  </InputLabel>
+```
+
 ---
 
 This project setup was created with help of: [this site](https://prateeksurana.me/blog/react-component-library-using-storybook-6/)

@@ -54,7 +54,7 @@ const InputTypeFileFormik = ({
       onDeleteIconClick={handleDeleteFile}
       onChange={onChange}
       error={!!meta.error}
-      helperText={meta.error || helperText}
+      helperText={(meta.touched && meta.error) || helperText}
       multiple={multiple}
       {...rest}
     />

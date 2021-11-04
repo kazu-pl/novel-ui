@@ -268,7 +268,11 @@ export default function EnhancedTable<T>({
                 ? pagination.currentPage
                 : pagination.currentPage - 1
             }
-            onPageChange={(event, page) => onChangePage(page + 1)}
+            onPageChange={(event, page) =>
+              paginationStartsAtZeroPage
+                ? onChangePage(page)
+                : onChangePage(page + 1)
+            }
             onRowsPerPageChange={handleChangeRowsPerPage}
             labelRowsPerPage={rowsPerPageText}
           />

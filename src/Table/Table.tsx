@@ -26,6 +26,7 @@ export interface TableProps<T> {
     key: string;
     isSortable?: boolean;
     noWrap?: boolean;
+    isHidden?: boolean;
   }[];
   tableName?: string;
   noDataText?: string;
@@ -70,6 +71,8 @@ export default function EnhancedTable<T>({
     []
   );
   const [isFiltersBarVisible, setIsFiltersBarVisible] = useState(false);
+
+  const visibleColumns = columns.filter((item) => !item.isHidden);
 
   const handleRequestSort = (sortingProperty: string) => {
     const isAsc =
@@ -126,12 +129,13 @@ export default function EnhancedTable<T>({
             </Typography>
           )}
 
-          {selectedItemsIndexes.length > 0 ? (
+          {selectedItemsIndexes.length > 0 &&
             iconsToManageSelectedData &&
             iconsToManageSelectedData(
               data.filter((_, index) => selectedItemsIndexes.includes(index))
-            )
-          ) : (
+            )}
+
+          {selectedItemsIndexes.length === 0 && filters && (
             <IconButton
               onClick={
                 filters
@@ -168,7 +172,7 @@ export default function EnhancedTable<T>({
                   </TableCell>
                 )}
 
-                {columns.map((column, columnIndex) => (
+                {visibleColumns.map((column, columnIndex) => (
                   <TableCell
                     key={columnIndex}
                     sortDirection={
@@ -221,7 +225,7 @@ export default function EnhancedTable<T>({
                       </TableCell>
                     )}
 
-                    {columns.map((column, columnIndex) => (
+                    {visibleColumns.map((column, columnIndex) => (
                       <TableCell
                         key={column.key || columnIndex}
                         width={column.noWrap ? "1px" : undefined}
@@ -236,7 +240,11 @@ export default function EnhancedTable<T>({
               {data.length === 0 && (
                 <TableRow>
                   <TableCell
-                    colSpan={isSelectable ? columns.length + 1 : columns.length}
+                    colSpan={
+                      isSelectable
+                        ? visibleColumns.length + 1
+                        : visibleColumns.length
+                    }
                     align="center"
                   >
                     {noDataText}

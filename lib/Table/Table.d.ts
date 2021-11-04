@@ -8,6 +8,7 @@ export interface TableProps<T> {
         key: string;
         isSortable?: boolean;
         noWrap?: boolean;
+        isHidden?: boolean;
     }[];
     tableName?: string;
     noDataText?: string;

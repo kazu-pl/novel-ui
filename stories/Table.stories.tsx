@@ -132,7 +132,7 @@ Basic.args = {
     },
   ],
   tableName: "Nutrions",
-  selectedItemsText: "zaznaczono",
+  selectedItemsText: (selectedItemsText) => `${selectedItemsText} zaznaczono`,
   iconsToManageSelectedData: () => (
     <>
       <Tooltip title="Edit item(s)">
@@ -330,7 +330,9 @@ export const WorkingTable = () => {
           },
         ]}
         tableName="Nutrients"
-        selectedItemsText="zaznaczono"
+        selectedItemsText={(selectedItemsNumber) =>
+          `${selectedItemsNumber} zaznaczono`
+        }
         iconsToManageSelectedData={(selectedItems) => (
           <>
             <Tooltip title="Edit item(s)">

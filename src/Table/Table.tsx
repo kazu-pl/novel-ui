@@ -40,6 +40,7 @@ export interface TableProps<T> {
     totalItems: number;
     currentPage: number;
   };
+  paginationStartsAtZeroPage?: boolean;
   sort?: {
     sortBy: string;
     sortDirection: SortDirection;
@@ -61,6 +62,7 @@ export default function EnhancedTable<T>({
   filters,
   rowsPerPageOptions = [5, 10, 25],
   pagination,
+  paginationStartsAtZeroPage,
   sort,
   onChangePage = () => {},
   onChangeRowsPerPage = () => {},
@@ -261,7 +263,11 @@ export default function EnhancedTable<T>({
             component="div"
             count={pagination.totalItems}
             rowsPerPage={pagination.pageSize}
-            page={pagination.currentPage - 1}
+            page={
+              paginationStartsAtZeroPage
+                ? pagination.currentPage
+                : pagination.currentPage - 1
+            }
             onPageChange={(event, page) => onChangePage(page + 1)}
             onRowsPerPageChange={handleChangeRowsPerPage}
             labelRowsPerPage={rowsPerPageText}

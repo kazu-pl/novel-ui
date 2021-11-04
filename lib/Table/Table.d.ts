@@ -22,6 +22,7 @@ export interface TableProps<T> {
         totalItems: number;
         currentPage: number;
     };
+    paginationStartsAtZeroPage?: boolean;
     sort?: {
         sortBy: string;
         sortDirection: SortDirection;
@@ -31,4 +32,4 @@ export interface TableProps<T> {
     rowsPerPageText?: string;
     onChangeSort?: (sortingProperty: string, direction: SortDirection) => void;
 }
-export default function EnhancedTable<T>({ columns, data, tableName, noDataText, isSelectable, iconsToManageSelectedData, selectedItemsText, filters, rowsPerPageOptions, pagination, sort, onChangePage, onChangeRowsPerPage, rowsPerPageText, onChangeSort, }: TableProps<T>): JSX.Element;
+export default function EnhancedTable<T>({ columns, data, tableName, noDataText, isSelectable, iconsToManageSelectedData, selectedItemsText, filters, rowsPerPageOptions, pagination, paginationStartsAtZeroPage, sort, onChangePage, onChangeRowsPerPage, rowsPerPageText, onChangeSort, }: TableProps<T>): JSX.Element;

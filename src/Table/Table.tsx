@@ -22,24 +22,64 @@ export interface TableProps<T> {
   data: T[];
   columns: {
     title: string;
+    /**
+     * specifies what key should column rener
+     */
     render: (row: T, index: number) => React.ReactNode;
+    /**
+     * `key` is the column key and is used in pagination. If you change sort direction or sortBy then `key` will be the value of `sortBy`
+     */
     key: string;
+    /**
+     * `isSortable` means that you can sort table data by the column `key` prop and the column has arrow if table data is sorted by the column
+     */
     isSortable?: boolean;
+    /**
+     * `noWrap` means that column has no width (useful for last column with action buttons if you don't want that column to be too wide)
+     */
     noWrap?: boolean;
     isHidden?: boolean;
   }[];
   tableName?: string;
   noDataText?: string;
+  /**
+   * specifies whether table allows you to select rows (for example to delete some of them or take another action) or not
+   */
   isSelectable?: boolean;
+  /**
+   * it's a function that renders items/buttons (icons) that will show when you select some data
+   */
   iconsToManageSelectedData?: (selectedItems: T[]) => React.ReactNode;
-  selectedItemsText?: string;
+
+  /**
+   * function that receives currently selected items number and returns text to display
+   * @example
+   * (selectedItemsLength)=> `${selectedItemsLength} items selected` // selectedItemsLength will be e.g. 5
+   */
+  selectedItemsText?: (selectedItemsLength: number) => string;
+  /**
+   * `filters` are items that will show above column titles but under filter icon. You can put `<select>` and so on
+   */
   filters?: React.ReactNode;
+  /**
+   * list of number avaliable to choose if you want to change rows visible at once.
+   * @example
+   * [10,25,50]
+   */
   rowsPerPageOptions?: number[];
   pagination?: {
     pageSize: number;
+    /**
+     * `totalItems` stands for all items in total, even those you don't see in your table right now (but you will see if change page)
+     */
     totalItems: number;
     currentPage: number;
   };
+  /**
+   * If your API sends back you data starting on page 0 (page 0 contains items e.g. 1-10 and page 1 contains items 11-20 and so on)
+   *
+   * AND YOU KEEP `pagination.currentPage` INITIALLY AS 0 - pass this option to correctly set changing page feature
+   */
   paginationStartsAtZeroPage?: boolean;
   sort?: {
     sortBy: string;
@@ -47,8 +87,13 @@ export interface TableProps<T> {
   };
   onChangePage?: (page: number) => void;
   onChangeRowsPerPage?: (rowsPerPage: number) => void;
-  rowsPerPageText?: string;
   onChangeSort?: (sortingProperty: string, direction: SortDirection) => void;
+  /**
+   * The text that is visible to the left from number of page size (page size number is changed via `rowsPerPageOptions` prop).
+   *
+   * Default value: `Rows per page:`
+   */
+  rowsPerPageText?: string;
 }
 
 export default function EnhancedTable<T>({
@@ -58,7 +103,7 @@ export default function EnhancedTable<T>({
   noDataText = "No data",
   isSelectable,
   iconsToManageSelectedData,
-  selectedItemsText = "items selected",
+  selectedItemsText = (items) => `${items} items selected`,
   filters,
   rowsPerPageOptions = [5, 10, 25],
   pagination,
@@ -123,7 +168,7 @@ export default function EnhancedTable<T>({
         >
           {selectedItemsIndexes.length > 0 ? (
             <Typography sx={{ flex: "1 1 100%" }}>
-              {` ${selectedItemsIndexes.length} ${selectedItemsText}`}
+              {selectedItemsText(selectedItemsIndexes.length)}
             </Typography>
           ) : (
             <Typography sx={{ flex: "1 1 100%" }} variant="h6">

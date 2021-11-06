@@ -63,13 +63,11 @@ export const ActionModalAsync = () => {
         onActionBtnClick={() => console.log("Normal Click")}
         onActionBtnClickPromise={handleActionBtnClick}
       >
-        <>
-          Action modal does not make any memory leak because all logic is being
-          kept inside of the component and not outside. Action Modal also sets
-          basic props so its better to ise Action Modal instead of Modal itself.
-          Modal is like low-level version - better for customizations and Action
-          Modal is higher-level version of Modal.
-        </>
+        Action modal does not make any memory leak because all logic is being
+        kept inside of the component and not outside. Action Modal also sets
+        basic props so its better to use Action Modal instead of Modal itself.
+        Modal is like low-level version - better for customizations and Action
+        Modal is higher-level version of Modal.
       </ActionModal>
     </>
   );

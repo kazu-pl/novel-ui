@@ -91,7 +91,7 @@ const Dashboard = ({
           <Sidebar {...sidebarProps} />
         </SwipeableDrawer>
 
-        <Box flexGrow={1} display="flex" flexDirection="column">
+        <Box flexGrow={1} display="flex" flexDirection="column" width="100%">
           <Box p={2}>
             <Typography variant="h6" component="h1">
               {title}

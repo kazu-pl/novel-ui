@@ -7,7 +7,7 @@ export interface ActionModalProps {
   open: boolean;
   onClose: () => void;
   headlineText?: React.ReactNode;
-  headlineTextColor?: HeadlineTextColor;
+  color?: HeadlineTextColor;
   children: ModalProps["children"];
   onActionBtnClick?: ButtonProps["onClick"];
   onActionBtnClickPromise?: ButtonProps["onClickPromise"];
@@ -20,7 +20,7 @@ const ActionModal = ({
   open,
   onClose,
   headlineText = "Caution",
-  headlineTextColor = "primary",
+  color = "primary",
   onActionBtnClick,
   onActionBtnClickPromise,
   children,
@@ -54,7 +54,7 @@ const ActionModal = ({
       open={open}
       onClose={onClose}
       headlineText={headlineText}
-      headlineTextColor={headlineTextColor}
+      headlineTextColor={color}
       footerContent={
         <>
           <Box mr={2}>
@@ -72,6 +72,7 @@ const ActionModal = ({
             onClick={handleActionBtnClick}
             isLoading={isActionInProgress}
             textTransform={buttonsTextTransform}
+            color={color === "black" ? "inherit" : color}
           >
             {actionBtnText}
           </Button>

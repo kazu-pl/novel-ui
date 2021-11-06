@@ -12,10 +12,11 @@ export type HeadlineTextColor =
   | "warning"
   | "black";
 
-export interface ModalProps extends MuiModalProps {
+export interface ModalProps extends Omit<MuiModalProps, "children"> {
   headlineText?: React.ReactNode;
   headlineTextColor?: HeadlineTextColor;
   footerContent?: React.ReactNode;
+  children: MuiModalProps["children"] | string;
 }
 
 const Modal = ({

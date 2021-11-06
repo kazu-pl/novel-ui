@@ -5,7 +5,7 @@ export interface ActionModalProps {
     open: boolean;
     onClose: () => void;
     headlineText?: React.ReactNode;
-    headlineTextColor?: HeadlineTextColor;
+    color?: HeadlineTextColor;
     children: ModalProps["children"];
     onActionBtnClick?: ButtonProps["onClick"];
     onActionBtnClickPromise?: ButtonProps["onClickPromise"];
@@ -13,5 +13,5 @@ export interface ActionModalProps {
     closeBtnText?: string;
     actionBtnText?: string;
 }
-declare const ActionModal: ({ open, onClose, headlineText, headlineTextColor, onActionBtnClick, onActionBtnClickPromise, children, buttonsTextTransform, closeBtnText, actionBtnText, ...rest }: ActionModalProps) => JSX.Element;
+declare const ActionModal: ({ open, onClose, headlineText, color, onActionBtnClick, onActionBtnClickPromise, children, buttonsTextTransform, closeBtnText, actionBtnText, ...rest }: ActionModalProps) => JSX.Element;
 export default ActionModal;

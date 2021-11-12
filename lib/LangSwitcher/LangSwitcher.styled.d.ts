@@ -1,2 +1,2 @@
-import { Link } from "react-router-dom";
-export declare const StyledListItemLink: import("styled-components").StyledComponent<typeof Link, import("styled-components").DefaultTheme, {}, never>;
+/// <reference types="react" />
+export declare const StyledListItemLink: import("styled-components").StyledComponent<import("react").ForwardRefExoticComponent<import("react-router-dom").LinkProps & import("react").RefAttributes<HTMLAnchorElement>>, import("styled-components").DefaultTheme, {}, never>;

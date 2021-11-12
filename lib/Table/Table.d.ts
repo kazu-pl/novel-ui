@@ -1,6 +1,10 @@
 /// <reference types="react" />
 export declare type SortDirection = "asc" | "desc";
 export interface TableProps<T> {
+    /**
+     * specifies whether data for table is fetching. If so, paper with cirtulacPrgress will be dispalyed on top of the table and interaction with it will be blocked.
+     */
+    isLoading?: boolean;
     data: T[];
     columns: {
         title: string;
@@ -76,4 +80,4 @@ export interface TableProps<T> {
      */
     rowsPerPageText?: string;
 }
-export default function EnhancedTable<T>({ columns, data, tableName, noDataText, isSelectable, iconsToManageSelectedData, selectedItemsText, filters, rowsPerPageOptions, pagination, paginationStartsAtZeroPage, sort, onChangePage, onChangeRowsPerPage, rowsPerPageText, onChangeSort, }: TableProps<T>): JSX.Element;
+export default function EnhancedTable<T>({ isLoading, columns, data, tableName, noDataText, isSelectable, iconsToManageSelectedData, selectedItemsText, filters, rowsPerPageOptions, pagination, paginationStartsAtZeroPage, sort, onChangePage, onChangeRowsPerPage, rowsPerPageText, onChangeSort, }: TableProps<T>): JSX.Element;

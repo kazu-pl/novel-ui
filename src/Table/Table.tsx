@@ -15,10 +15,15 @@ import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useState } from "react";
+import TableLoadingPaper from "./TableLoadingSpinner";
 
 export type SortDirection = "asc" | "desc";
 
 export interface TableProps<T> {
+  /**
+   * specifies whether data for table is fetching. If so, paper with cirtulacPrgress will be dispalyed on top of the table and interaction with it will be blocked.
+   */
+  isLoading?: boolean;
   data: T[];
   columns: {
     title: string;
@@ -97,6 +102,7 @@ export interface TableProps<T> {
 }
 
 export default function EnhancedTable<T>({
+  isLoading,
   columns,
   data,
   tableName,
@@ -151,7 +157,8 @@ export default function EnhancedTable<T>({
       : setSelectedItemsIndexes([...selectedItemsIndexes, selectedRowIndex]);
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", position: "relative" }}>
+      {isLoading && <TableLoadingPaper />}
       <Paper sx={{ width: "100%", mb: 2 }}>
         <Toolbar
           sx={{

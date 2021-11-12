@@ -98,6 +98,7 @@ const allItems: Data[] = [
 
 export const Basic = Template.bind({});
 Basic.args = {
+  isLoading: true,
   data: allItems.slice(0, 5),
   columns: [
     {

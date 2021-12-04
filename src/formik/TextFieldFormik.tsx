@@ -1,5 +1,5 @@
 import TextField, { TextFieldProps } from "../inputs/TextField";
-import { FieldInputProps, useField } from "formik";
+import { useField } from "formik";
 
 export type TextFieldFormikProps = Omit<
   TextFieldProps,
@@ -7,14 +7,14 @@ export type TextFieldFormikProps = Omit<
 > & {
   name: string;
   /**
-   * `onChange` prop may be used when you need to fetch some data on every input change. Usually you don't need that prop. If you don't use the prop, `field.onChange` from formik will be used. However if you use that prop then you will get `formik.onChange` function as 2nd argument of `onChange` method and you have to manually use it to update form field.
+   * `onChange` prop may be used when you need to fetch some data on every input change. formik onChange handler `field.onChange` is applied so you don't need to additionaly set the value
    *
    * Below is the implementation that shows how `onChange` events are handled in `TextFieldFormik`:
    * @example
    * `
    * const handleChange: TextFieldProps["onChange"] = (e) => {
-   *  onChange && onChange(e, field.onChange);
-   *  !onChange && field.onChange(e);
+   *  onChange && onChange(e)
+   *  field.onChange(e);
    * };
    *
    * return (
@@ -25,8 +25,7 @@ export type TextFieldFormikProps = Omit<
    * `
    */
   onChange?: (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-    formikChangeHandler: FieldInputProps<string>["onChange"]
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => void;
 };
 
@@ -39,8 +38,8 @@ const TextFieldFormik = ({
   const [field, meta] = useField(name);
 
   const handleChange: TextFieldProps["onChange"] = (e) => {
-    onChange && onChange(e, field.onChange);
-    !onChange && field.onChange(e);
+    onChange && onChange(e);
+    field.onChange(e);
   };
 
   return (

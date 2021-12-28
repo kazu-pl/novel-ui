@@ -47,7 +47,7 @@ Also, pay attention to NOT put any `*.ts` or `*.tsx` file in `types` folder - it
 - Run command `yarn add -D eslint-config-react-app @typescript-eslint/eslint-plugin@^4.0.0 @typescript-eslint/parser@^4.0.0 babel-eslint@^10.0.0 eslint@^7.5.0 eslint-plugin-flowtype@^5.2.0 eslint-plugin-import@^2.22.0 eslint-plugin-jsx-a11y@^6.3.1 eslint-plugin-react@^7.20.3 eslint-plugin-react-hooks@^4.0.8`
 - in `package.json` add:
 
-```
+```json
 
  "eslintConfig": {
     "extends": "react-app"
@@ -57,7 +57,7 @@ Also, pay attention to NOT put any `*.ts` or `*.tsx` file in `types` folder - it
 
 OR create `.eslintrc.json` and paste:
 
-```
+```json
 {
   "extends": "react-app"
 }
@@ -76,7 +76,7 @@ more info on this step [here](https://mui.com/getting-started/installation/#npm)
 
 - add in `"dependencies"` key in package.json:
 
-```
+```json
  {
    "dependencies": {
 -    "@mui/styled-engine": "latest"
@@ -104,7 +104,7 @@ If not, then classes will be like: `.css-r85fhy-MuiButtonBase-root-MuiButton-roo
 
 This is because you probably wrap button in your custom komponent so it loses ref. In order to fix this you need to pass `ref` like this:
 
-```
+```tsx
 import MuiButton, {
   ButtonProps as MuiButtonProps,
 } from "@material-ui/core/Button";
@@ -119,7 +119,6 @@ const Button = forwardRef(
 );
 
 export default Button;
-
 ```
 
 ---
@@ -128,20 +127,19 @@ export default Button;
 
 You need to set `displayName` in particular component file and also the component function has to be different name than file name, like this:
 
-```
+```tsx
 // Example.tsx
-
 
 export interface CustomExampleProps {}
 
-const CustomExample = forwardRef((props: CustomExampleProps, ref: ForwardedRef<HTMLButtonElement>) => {
-  return <div></div>
-})
+const CustomExample = forwardRef(
+  (props: CustomExampleProps, ref: ForwardedRef<HTMLButtonElement>) => {
+    return <div></div>;
+  }
+);
 
 CustomExample.displayName = "Example"; // CustomExample is a function name and is different than the file name (Example.tsx)
 export default CustomExample;
-
-
 ```
 
 # How to create input type file with formik or other form library:
@@ -154,7 +152,7 @@ When you submit, you will get that array from formik but you don't need that. In
 HOW TO CUSTOMIZE INPUT FILE:
 You can hide original input file but you should add `id` to it, so you can use `label` for the same id and wrap it around your custom styled button or div. IMPORTANT: you can't use `<button/>` component inside `label` because when you will click on that, you will trigger that button click action, not the input triger action. The easiest way is to just use `span` that looks like a button:
 
-```
+```tsx
 <input id="file_id" type="file" hidden ref={inputRef} {...rest} />
   <InputLabel htmlFor="file_id">
     <Button component="span" {...buttonProps}>

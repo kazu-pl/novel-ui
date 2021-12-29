@@ -3,7 +3,10 @@ import {
   StyledEngineProvider,
 } from "@mui/material/styles";
 // import { StylesProvider } from "@mui/styled-engine-sc/modern";
-import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import {
+  StyleSheetManager,
+  ThemeProvider as StyledThemeProvider,
+} from "styled-components";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import theme from "../theme/muiTheme";
@@ -21,13 +24,15 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <StyledEngineProvider injectFirst>
-      <MuiThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme}>
-          <CssBaseline />
-          {Story()}
-        </StyledThemeProvider>
-      </MuiThemeProvider>
-    </StyledEngineProvider>
+    <StyleSheetManager disableVendorPrefixes>
+      <StyledEngineProvider injectFirst>
+        <MuiThemeProvider theme={theme}>
+          <StyledThemeProvider theme={theme}>
+            <CssBaseline />
+            {Story()}
+          </StyledThemeProvider>
+        </MuiThemeProvider>
+      </StyledEngineProvider>
+    </StyleSheetManager>
   ),
 ];

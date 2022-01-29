@@ -26,17 +26,21 @@ const InputTypeFileFormik = ({
 
     const filesList = Array.from(event.target.files);
 
-    multiple
-      ? Array.isArray(field.value)
-        ? helpers.setValue([
-            ...field.value,
-            ...filesList.map((file) => ({
-              file,
-              id: uuidv4(),
-            })),
-          ])
-        : helpers.setValue(filesList.map((file) => ({ file, id: uuidv4() })))
-      : helpers.setValue({ file: filesList[0], id: uuidv4() });
+    if (multiple) {
+      if (Array.isArray(field.value)) {
+        helpers.setValue([
+          ...field.value,
+          ...filesList.map((file) => ({
+            file,
+            id: uuidv4(),
+          })),
+        ]);
+      } else {
+        helpers.setValue(filesList.map((file) => ({ file, id: uuidv4() })));
+      }
+    } else {
+      helpers.setValue({ file: filesList[0], id: uuidv4() });
+    }
   };
 
   const handleDeleteFile = (fileId: string) => {

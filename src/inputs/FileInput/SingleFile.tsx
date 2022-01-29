@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import ColoredIconWrapper from "../../ColoredIconWrapper";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 export type ExtendedFile = {
   file: File;
@@ -13,9 +14,14 @@ export type ExtendedFile = {
 export interface SingleFileProps {
   file: ExtendedFile;
   onDeleteIconClick: (fileId: string) => void;
+  onPreviewFileIconClick?: (file: ExtendedFile) => void;
 }
 
-const SingleFile = ({ file, onDeleteIconClick }: SingleFileProps) => {
+const SingleFile = ({
+  file,
+  onDeleteIconClick,
+  onPreviewFileIconClick,
+}: SingleFileProps) => {
   return (
     <Box
       mt={1}
@@ -42,7 +48,11 @@ const SingleFile = ({ file, onDeleteIconClick }: SingleFileProps) => {
       >
         <Typography>{file.file.name}</Typography>
       </Box>
-
+      {onPreviewFileIconClick && (
+        <IconButton onClick={() => onPreviewFileIconClick(file)}>
+          <VisibilityIcon />
+        </IconButton>
+      )}
       <IconButton onClick={() => onDeleteIconClick(file.id)}>
         <DeleteIcon />
       </IconButton>

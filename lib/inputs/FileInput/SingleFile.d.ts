@@ -6,6 +6,7 @@ export declare type ExtendedFile = {
 export interface SingleFileProps {
     file: ExtendedFile;
     onDeleteIconClick: (fileId: string) => void;
+    onPreviewFileIconClick?: (file: ExtendedFile) => void;
 }
-declare const SingleFile: ({ file, onDeleteIconClick }: SingleFileProps) => JSX.Element;
+declare const SingleFile: ({ file, onDeleteIconClick, onPreviewFileIconClick, }: SingleFileProps) => JSX.Element;
 export default SingleFile;

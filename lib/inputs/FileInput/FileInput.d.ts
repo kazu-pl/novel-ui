@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import { ButtonProps } from "../../buttons/Button";
-import { ExtendedFile } from "./SingleFile";
+import { SingleFileProps, ExtendedFile } from "./SingleFile";
 export interface FileInputProps {
     name: string;
     id: string;
@@ -20,9 +20,11 @@ export interface FileInputProps {
      * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file}
      *
      */
-    accept: string;
+    accept?: string;
     /**
-     * inputRef prop is used to get files
+     * inputRef prop is used to get files.
+     *
+     * WARNING: KEEP IN MIND THAT ref KEEPS FILES ONLY FROM LATEST CHANGE EVENT SO IF YOU ADD 1st FILE AND THEN ADD 2nd FILE THEN ref WILL KEEP ONLY 2nd FILE - NOT BOTH!
      *
      * @example <caption>When `multiple` prop is NOT passed</caption>
      * const fileFromInputRef = inputFileRef.current.files[0];
@@ -43,9 +45,51 @@ export interface FileInputProps {
      * });
      *
      */
-    inputRef: React.MutableRefObject<HTMLInputElement | null>;
+    inputRef?: React.MutableRefObject<HTMLInputElement | null>;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onDeleteIconClick: (fileId: string) => void;
+    /**
+     * Used to set preview of image. Preview view/box/window needs to be handled by yourself outside of `FileInput` because different file types needs different preview method.
+     *
+     * @example
+     * Images preview:
+     *
+     * const MyComponent = () => {
+     *  const [url, setUrl] = useState<string | null>(null);
+     *
+     *  return (
+     *    <>
+     *      <FileInput
+     *      name="images"
+     *      id="img_input"
+     *      accept="image/*"
+     *      multiple
+     *      text="select images"
+     *      onPreviewFileIconClick={(file)=> {
+     *        url && URL.revokeObjectURL(url);
+     *        const newUrl = URL.createObjectURL(file.file);
+     *        setUrl(newUrl);
+     *      }}
+     *      />
+     *    {url && (
+     *      <div>
+     *        <img src={url} alt="file preview" />
+     *        <button
+     *          onClick={()=> {
+     *            URL.revokeObjectURL(url); // clears reference to the image in browser memory. WORKS ONLY IN CHROME. More here: https://www.youtube.com/watch?v=18q6-QR_XXY
+     *            setUrl(null);
+     *          }}>Close Preview</button>
+     *      </div>
+     *    )}
+     *    </>
+     *  );
+     * }
+     *
+     * @example
+     * PDFs preview:
+     * // the same as with images. The only difference is that you render `<embed src={url} />` instead of `<img />`
+     */
+    onPreviewFileIconClick?: SingleFileProps["onPreviewFileIconClick"];
     value: ExtendedFile | ExtendedFile[];
     multiple?: boolean;
     helperText?: string;
@@ -58,5 +102,5 @@ export interface FileInputProps {
         fullWidth?: ButtonProps["fullWidth"];
     };
 }
-declare const FileInput: ({ id, inputRef, text, buttonProps, helperText, error, onDeleteIconClick, value, ...rest }: FileInputProps) => JSX.Element;
+declare const FileInput: ({ id, inputRef, text, buttonProps, helperText, error, onDeleteIconClick, onPreviewFileIconClick, value, ...rest }: FileInputProps) => JSX.Element;
 export default FileInput;

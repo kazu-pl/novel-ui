@@ -1,3 +1,80 @@
+# React-snap with DashboardLayout and expand `Collapse` component when running react-snap:
+
+When you run react-snap you have to make sure that `Collapse` component is open. When it's open then its children (react -router Links components) are mounted into the DOM and react-snap can detect it and create index.html files.
+
+When you create Sidebar you probably want to pass to that component array with objects that describes all avaliable items in sidebar menu. You pass it like this:
+
+```tsx
+const MyComp = () => {
+  return (
+    <Sidebar
+      items={[
+        {
+          variant: "no-dropdown",
+          icon: (
+            <ColoredIconWrapper color="grey">
+              <DashboardIcon />
+            </ColoredIconWrapper>
+          ),
+          label: "Dashboard",
+          to: "/dashboard",
+        },
+        {
+          variant: "with-dropdown",
+          icon: (
+            <ColoredIconWrapper color="grey">
+              <InboxIcon />
+            </ColoredIconWrapper>
+          ),
+          label: "Account",
+          dropdownItems: [
+            {
+              to: "/account/avatar",
+              label: "News",
+            },
+            {
+              to: "/account/settings",
+              label: "News",
+            },
+          ],
+        },
+      ]}
+    />
+  );
+};
+```
+
+Lets suppose that single SidebarItem returns `Collapse` MUI component to colapse sidebar items if they are with dropdown. It may look lik this:
+
+```tsx
+import Collapse from "@mui/material/Collapse";
+import List from "@mui/material/List";
+
+// src/Sidebar/SidebarMenuItem.tsx
+
+const SingleSidebarItem = () => {
+  return (
+    <Collapse
+      // `navigator.userAgent === "ReactSnap"` checks if react-snap is running. If so, then open tabs so they are mounted into DOM so react-snap can detect its children (Links) and create links based on that
+      in={navigator.userAgent === "ReactSnap" ? true : isSubmenuOpen}
+      timeout="auto"
+      unmountOnExit
+    >
+      <List component="div" disablePadding>
+        {props.dropdownItems.map((item, index) => (
+          <StyledLink key={index} to={item.to} $asSubmenuItem>
+            {item.label}
+          </StyledLink>
+        ))}
+      </List>
+    </Collapse>
+  );
+};
+```
+
+Without that `navigator.userAgent === "ReactSnap"` sidebar submenu items will NOT be expanded when running `react-snap` so it will be impossible for `react-snap` to detect them and create index.html files for them.
+When running in real browser it will be collapsed so the behaviour won't be affected. It SHOULD be collapsed UNLESS `isSubmenuOpen` is true
+
 # What git merge method choose to merge develop into master branch:
 
 If you have some branch `A` that contains only release versions (for example: `master`) and another branch `B` that develops new features (for example: `develop`) then if you want to publish new features from develop to master you should choose normal merge request method (on gitub it's called `Create merge request`) instead of `squash merge`.

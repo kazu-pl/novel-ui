@@ -66,7 +66,12 @@ const SidebarMenuItem = (props: SidebarMenuItemProps) => {
           </ColoredIconWrapper>
         )}
       </StyledListItemButton>
-      <Collapse in={isSubmenuOpen} timeout="auto" unmountOnExit>
+      <Collapse
+        // `navigator.userAgent === "ReactSnap"` checks if react-snap is running. If so, then open tabs so they are mounted into DOM so react-snap can detect its children (Links) and create links based on that
+        in={navigator.userAgent === "ReactSnap" ? true : isSubmenuOpen}
+        timeout="auto"
+        unmountOnExit
+      >
         <List component="div" disablePadding>
           {props.dropdownItems.map((item, index) => (
             <StyledLink key={index} to={item.to} $asSubmenuItem>

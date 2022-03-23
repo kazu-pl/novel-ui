@@ -14,7 +14,7 @@ import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TableLoadingPaper from "./TableLoadingSpinner";
 
 export type SortDirection = "asc" | "desc";
@@ -162,12 +162,6 @@ export default function EnhancedTable<T>({
           selectedItemsIndexes.filter((item) => item !== selectedRowIndex)
         )
       : setSelectedItemsIndexes([...selectedItemsIndexes, selectedRowIndex]);
-
-  useEffect(() => {
-    console.log({
-      pagination,
-    });
-  }, [pagination]);
 
   return (
     <Box sx={{ width: "100%", position: "relative" }}>

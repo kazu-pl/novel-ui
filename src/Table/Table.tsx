@@ -67,6 +67,10 @@ export interface TableProps<T> {
    */
   filters?: React.ReactNode;
   /**
+   * Specify if `filters` are visible initially - useful when you want to e.g. show filters bar with search input when there's `search` query in url and you just refreshed the page so you want to not only `search` in url but also the actual search that changes it
+   */
+  isFiltersBarVisibleInitially?: boolean;
+  /**
    * list of number avaliable to choose if you want to change rows visible at once.
    * @example
    * [10,25,50]
@@ -111,6 +115,7 @@ export default function EnhancedTable<T>({
   iconsToManageSelectedData,
   selectedItemsText = (items) => `${items} items selected`,
   filters,
+  isFiltersBarVisibleInitially = false,
   rowsPerPageOptions = [5, 10, 25],
   pagination,
   paginationStartsAtZeroPage,
@@ -123,7 +128,9 @@ export default function EnhancedTable<T>({
   const [selectedItemsIndexes, setSelectedItemsIndexes] = useState<number[]>(
     []
   );
-  const [isFiltersBarVisible, setIsFiltersBarVisible] = useState(false);
+  const [isFiltersBarVisible, setIsFiltersBarVisible] = useState(
+    isFiltersBarVisibleInitially
+  );
 
   const visibleColumns = columns.filter((item) => !item.isHidden);
 

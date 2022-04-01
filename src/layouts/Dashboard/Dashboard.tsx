@@ -92,12 +92,14 @@ const Dashboard = ({
         </SwipeableDrawer>
 
         <Box flexGrow={1} display="flex" flexDirection="column" width="100%">
-          <Box p={2}>
+          <Box p={2} height="100%" display="flex" flexDirection="column">
             <Typography variant="h6" component="h1">
               {title}
             </Typography>
 
-            <Box pt={2}>{children}</Box>
+            <Box pt={2} flexGrow={1}>
+              {children}
+            </Box>
           </Box>
         </Box>
       </Box>

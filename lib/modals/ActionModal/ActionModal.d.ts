@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import { HeadlineTextColor, ModalProps } from "../Modal";
 import { ButtonProps } from "../../../src/buttons/Button";
-export interface ActionModalProps {
+export interface ActionModalProps extends Pick<ModalProps, "maxWidthOnDesktop" | "widthOnDesktop"> {
     open: boolean;
     onClose: () => void;
     headlineText?: React.ReactNode;

@@ -3,7 +3,8 @@ import Button, { ButtonProps } from "../../../src/buttons/Button";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 
-export interface ActionModalProps {
+export interface ActionModalProps
+  extends Pick<ModalProps, "maxWidthOnDesktop" | "widthOnDesktop"> {
   open: boolean;
   onClose: () => void;
   headlineText?: React.ReactNode;
@@ -27,6 +28,7 @@ const ActionModal = ({
   buttonsTextTransform,
   closeBtnText = "Close",
   actionBtnText = "Confirm",
+
   ...rest
 }: ActionModalProps) => {
   const [isActionInProgress, setIsActionInProgress] = useState(false);

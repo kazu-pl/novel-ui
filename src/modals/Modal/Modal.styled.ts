@@ -1,7 +1,10 @@
 import styled, { css } from "styled-components";
 import { HeadlineTextColor } from "./Modal";
 
-export const StyledModalBody = styled.div`
+export const StyledModalBody = styled.div<{
+  maxWidthOnDesktop?: number | string;
+  widthOnDesktop?: number | string;
+}>`
   background-color: #efefef;
   position: absolute;
   top: 50%;
@@ -18,8 +21,8 @@ export const StyledModalBody = styled.div`
   max-width: calc(100vw - 32px);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.values["md"]}px) {
-    width: unset;
-    max-width: unset;
+    width: ${({ maxWidthOnDesktop }) => maxWidthOnDesktop || "unset"};
+    max-width: ${({ widthOnDesktop }) => widthOnDesktop || "unset"};
   }
 `;
 

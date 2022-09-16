@@ -6,6 +6,8 @@ export interface ModalProps extends Omit<MuiModalProps, "children"> {
     headlineTextColor?: HeadlineTextColor;
     footerContent?: React.ReactNode;
     children: MuiModalProps["children"] | string;
+    maxWidthOnDesktop?: number | string;
+    widthOnDesktop?: number | string;
 }
-declare const Modal: ({ open, onClose, children, headlineText, footerContent, headlineTextColor, ...rest }: ModalProps) => JSX.Element;
+declare const Modal: ({ open, onClose, children, headlineText, footerContent, headlineTextColor, maxWidthOnDesktop, widthOnDesktop, ...rest }: ModalProps) => JSX.Element;
 export default Modal;

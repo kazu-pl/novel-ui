@@ -17,6 +17,8 @@ export interface ModalProps extends Omit<MuiModalProps, "children"> {
   headlineTextColor?: HeadlineTextColor;
   footerContent?: React.ReactNode;
   children: MuiModalProps["children"] | string;
+  maxWidthOnDesktop?: number | string;
+  widthOnDesktop?: number | string;
 }
 
 const Modal = ({
@@ -26,11 +28,16 @@ const Modal = ({
   headlineText,
   footerContent,
   headlineTextColor,
+  maxWidthOnDesktop,
+  widthOnDesktop,
   ...rest
 }: ModalProps) => {
   return (
     <MuiModal open={open} onClose={onClose} {...rest}>
-      <StyledModalBody>
+      <StyledModalBody
+        maxWidthOnDesktop={maxWidthOnDesktop}
+        widthOnDesktop={widthOnDesktop}
+      >
         {headlineText && (
           <StyledTitleWrapper color={headlineTextColor}>
             <Typography

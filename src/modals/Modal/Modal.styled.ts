@@ -21,8 +21,14 @@ export const StyledModalBody = styled.div<{
   max-width: calc(100vw - 32px);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.values["md"]}px) {
-    width: ${({ maxWidthOnDesktop }) => maxWidthOnDesktop || "unset"};
-    max-width: ${({ widthOnDesktop }) => widthOnDesktop || "unset"};
+    width: ${({ maxWidthOnDesktop }) =>
+      typeof maxWidthOnDesktop === "number"
+        ? `${maxWidthOnDesktop}px`
+        : maxWidthOnDesktop || "unset"};
+    max-width: ${({ widthOnDesktop }) =>
+      typeof widthOnDesktop === "number"
+        ? `${widthOnDesktop}px`
+        : widthOnDesktop || "unset"};
   }
 `;
 

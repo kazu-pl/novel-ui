@@ -1,3 +1,4 @@
+import React from "react";
 import { Meta } from "@storybook/react/types-6-0";
 import { Story } from "@storybook/react";
 
@@ -20,6 +21,8 @@ import LangSwitcher from "../../src/LangSwitcher";
 
 // @ts-ignore
 import codeBracketsSVGUrl from "../../stories/introduction/assets/code-brackets.svg";
+import IconButton from "@mui/material/IconButton";
+import { Tooltip } from "@mui/material";
 
 const FlagWrapper = ({ src, alt }: { src: string; alt: string }) => {
   return (
@@ -62,6 +65,13 @@ const Template: Story<DashboardProps> = (args) => (
 export const Basic = Template.bind({});
 Basic.args = {
   title: "Dashboard",
+  additionalControls: (
+    <Tooltip title="you can add here additional controls">
+      <IconButton>
+        <SettingsIcon />
+      </IconButton>
+    </Tooltip>
+  ),
   appBarProps: {
     logo: (
       <ColoredIconWrapper color="white">

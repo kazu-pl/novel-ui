@@ -8,7 +8,7 @@ import {
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useState } from "react";
+import React, { useState } from "react";
 import ColoredIconWrapper from "../../ColoredIconWrapper";
 import Typography from "@mui/material/Typography";
 
@@ -18,6 +18,7 @@ export interface DashboardProps {
   bgColor?: string;
   children: React.ReactNode;
   title: string;
+  additionalControls?: React.ReactNode;
 }
 
 const Dashboard = ({
@@ -26,6 +27,7 @@ const Dashboard = ({
   bgColor,
   children,
   title,
+  additionalControls,
 }: DashboardProps) => {
   const {
     additionalControls: additionalAppBarControls,
@@ -93,9 +95,13 @@ const Dashboard = ({
 
         <Box flexGrow={1} display="flex" flexDirection="column" width="100%">
           <Box p={2} height="100%" display="flex" flexDirection="column">
-            <Typography variant="h6" component="h1">
-              {title}
-            </Typography>
+            <Box display="flex" justifyContent="space-between">
+              <Typography variant="h6" component="h1">
+                {title}
+              </Typography>
+
+              {additionalControls}
+            </Box>
 
             <Box pt={2} flexGrow={1}>
               {children}

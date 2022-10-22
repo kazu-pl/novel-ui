@@ -1,3 +1,4 @@
+import React from "react";
 import { Meta } from "@storybook/react/types-6-0";
 import { Story } from "@storybook/react";
 import Tooltip from "@mui/material/Tooltip";
@@ -6,6 +7,7 @@ import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import Button from "../src/buttons/Button";
 import Box from "@mui/material/Box";
+import { Star } from "@mui/icons-material";
 
 import { ArgType } from "../types/storybookArgs";
 
@@ -102,7 +104,12 @@ Basic.args = {
   data: allItems.slice(0, 5),
   columns: [
     {
-      title: "No.",
+      title: (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Star style={{ color: "gold" }} />
+          <span style={{ marginLeft: 8 }}>No.</span>
+        </div>
+      ),
       render: (row, index) => index + 1,
       key: "desert",
       width: 200,
@@ -134,7 +141,6 @@ Basic.args = {
       render: (row, index) => row.protein,
       key: "protein",
       noWrap: true,
-      width: 200,
     },
   ],
   tableName: "Nutrions",
@@ -246,7 +252,7 @@ const fetchTableData = ({
 };
 
 export const WorkingTable = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Data[]>([]);
   const [pagination, setPagination] = useState({
     currentPage: 1,
     pageSize: 5,

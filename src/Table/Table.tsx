@@ -20,7 +20,7 @@ import TableLoadingPaper from "./TableLoadingSpinner";
 export type SortDirection = "asc" | "desc";
 
 export interface ColumnType<T> {
-  title: string;
+  title: React.ReactNode;
   /**
    * specifies what key should column rener
    */

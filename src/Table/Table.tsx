@@ -19,32 +19,34 @@ import TableLoadingPaper from "./TableLoadingSpinner";
 
 export type SortDirection = "asc" | "desc";
 
+export interface ColumnType<T> {
+  title: string;
+  /**
+   * specifies what key should column rener
+   */
+  render: (row: T, index: number) => React.ReactNode;
+  /**
+   * `key` is the column key and is used in pagination. If you change sort direction or sortBy then `key` will be the value of `sortBy`
+   */
+  key: string;
+  /**
+   * `isSortable` means that you can sort table data by the column `key` prop and the column has arrow if table data is sorted by the column
+   */
+  isSortable?: boolean;
+  /**
+   * `noWrap` means that column has no width (useful for last column with action buttons if you don't want that column to be too wide)
+   */
+  noWrap?: boolean;
+  isHidden?: boolean;
+}
+
 export interface TableProps<T> {
   /**
    * specifies whether data for table is fetching. If so, paper with cirtulacPrgress will be dispalyed on top of the table and interaction with it will be blocked.
    */
   isLoading?: boolean;
   data: T[];
-  columns: {
-    title: string;
-    /**
-     * specifies what key should column rener
-     */
-    render: (row: T, index: number) => React.ReactNode;
-    /**
-     * `key` is the column key and is used in pagination. If you change sort direction or sortBy then `key` will be the value of `sortBy`
-     */
-    key: string;
-    /**
-     * `isSortable` means that you can sort table data by the column `key` prop and the column has arrow if table data is sorted by the column
-     */
-    isSortable?: boolean;
-    /**
-     * `noWrap` means that column has no width (useful for last column with action buttons if you don't want that column to be too wide)
-     */
-    noWrap?: boolean;
-    isHidden?: boolean;
-  }[];
+  columns: ColumnType<T>[];
   tableName?: string;
   noDataText?: string;
   /**

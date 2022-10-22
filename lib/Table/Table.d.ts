@@ -19,6 +19,7 @@ export interface ColumnType<T> {
      */
     noWrap?: boolean;
     isHidden?: boolean;
+    width?: number | string;
 }
 export interface TableProps<T> {
     /**

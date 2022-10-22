@@ -38,6 +38,7 @@ export interface ColumnType<T> {
    */
   noWrap?: boolean;
   isHidden?: boolean;
+  width?: number | string;
 }
 
 export interface TableProps<T> {
@@ -240,6 +241,15 @@ export default function EnhancedTable<T>({
                     key={columnIndex}
                     sortDirection={
                       sort?.sortBy === column.key ? sort?.sortDirection : false
+                    }
+                    width={column.width}
+                    style={
+                      column.width
+                        ? {
+                            width: column.width,
+                            minWidth: column.width,
+                          }
+                        : undefined
                     }
                   >
                     {column.isSortable ? (

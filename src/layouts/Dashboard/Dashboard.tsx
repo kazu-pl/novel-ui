@@ -23,7 +23,7 @@ export interface DashboardProps {
 
 const Dashboard = ({
   appBarProps,
-  sidebarProps: { width: SIDEBAR_WIDTH, ...restOfSidebarProps },
+  sidebarProps: { width: SIDEBAR_WIDTH = 280, ...restOfSidebarProps },
   bgColor,
   children,
   title,

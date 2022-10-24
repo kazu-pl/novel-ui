@@ -19,32 +19,42 @@ import TableLoadingPaper from "./TableLoadingSpinner";
 
 export type SortDirection = "asc" | "desc";
 
+export interface ColumnType<T> {
+  title: React.ReactNode;
+  /**
+   * specifies what key should column render
+   */
+  render: (row: T, index: number) => React.ReactNode;
+  /**
+   * `key` is the column key and is used in pagination. If you change sort direction or sortBy then `key` will be the value of `sortBy`
+   */
+  key: string;
+  /**
+   * `isSortable` means that you can sort table data by the column `key` prop and the column has arrow if table data is sorted by the column
+   */
+  isSortable?: boolean;
+  /**
+   * `noWrap` means that column has no width (useful for last column with action buttons if you don't want that column to be too wide)
+   *
+   * `noWrap` sets `width` attribute of `th` html tag under the hood, the same thing does `width` key . `noWrap` takes priority over `width` key
+   */
+  noWrap?: boolean;
+  isHidden?: boolean;
+  /**
+   * Set `width` attribute of `th` html tag.
+   *
+   * Keep in mind that if you set both `width` and `noWrap` then `width` will be ignored and `noWrap` will take priority
+   */
+  width?: number | string;
+}
+
 export interface TableProps<T> {
   /**
    * specifies whether data for table is fetching. If so, paper with cirtulacPrgress will be dispalyed on top of the table and interaction with it will be blocked.
    */
   isLoading?: boolean;
   data: T[];
-  columns: {
-    title: string;
-    /**
-     * specifies what key should column rener
-     */
-    render: (row: T, index: number) => React.ReactNode;
-    /**
-     * `key` is the column key and is used in pagination. If you change sort direction or sortBy then `key` will be the value of `sortBy`
-     */
-    key: string;
-    /**
-     * `isSortable` means that you can sort table data by the column `key` prop and the column has arrow if table data is sorted by the column
-     */
-    isSortable?: boolean;
-    /**
-     * `noWrap` means that column has no width (useful for last column with action buttons if you don't want that column to be too wide)
-     */
-    noWrap?: boolean;
-    isHidden?: boolean;
-  }[];
+  columns: ColumnType<T>[];
   tableName?: string;
   noDataText?: string;
   /**
@@ -239,6 +249,16 @@ export default function EnhancedTable<T>({
                     sortDirection={
                       sort?.sortBy === column.key ? sort?.sortDirection : false
                     }
+                    // a) below `width` will be added as html attribute but if you give it let's say 600px but the content in the column will be max 400px then the column won't grow  to 600px because it's content is too small
+                    width={column.noWrap ? "1px" : column.width || undefined} // setting `width` html prop does nothing when also setting `minWidth` via `style`?
+                    // b) that's why I add below `minWidth` style which will force the column to grow to the given width (in our example 600px). Also notice that `width` style won't work, it has to be `minWidth`
+                    style={
+                      column.width
+                        ? {
+                            minWidth: column.width,
+                          }
+                        : undefined
+                    }
                   >
                     {column.isSortable ? (
                       <>
@@ -287,10 +307,7 @@ export default function EnhancedTable<T>({
                     )}
 
                     {visibleColumns.map((column, columnIndex) => (
-                      <TableCell
-                        key={column.key || columnIndex}
-                        width={column.noWrap ? "1px" : undefined}
-                      >
+                      <TableCell key={column.key || columnIndex}>
                         {column.render(row, rowIndex)}
                       </TableCell>
                     ))}

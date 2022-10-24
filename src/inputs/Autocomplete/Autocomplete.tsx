@@ -18,6 +18,10 @@ export interface AutocompleteProps<T>
   helperText?: string;
   inputAutoComplete?: string;
   TextFieldInputProps?: TextFieldProps["InputProps"];
+  /**
+   * This prop won't work. If you want to use `paceholder` feature, use prop called `inputLabel` instead
+   */
+  placeholder?: string | undefined;
 }
 
 const Autocomplete = <T extends Option>({
@@ -28,6 +32,7 @@ const Autocomplete = <T extends Option>({
   autoHighlight = true,
   noOptionsText = "No matching elements",
   TextFieldInputProps,
+  placeholder,
   ...rest
 }: AutocompleteProps<T>) => {
   return (

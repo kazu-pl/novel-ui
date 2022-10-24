@@ -1,2 +1,2 @@
 export { default } from "./Table";
-export type { TableProps, SortDirection } from "./Table";
+export type { TableProps, SortDirection, ColumnType } from "./Table";

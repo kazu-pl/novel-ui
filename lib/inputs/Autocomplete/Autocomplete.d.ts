@@ -11,6 +11,10 @@ export interface AutocompleteProps<T> extends Omit<MuiAutocompleteProps<T, undef
     helperText?: string;
     inputAutoComplete?: string;
     TextFieldInputProps?: TextFieldProps["InputProps"];
+    /**
+     * This prop won't work. If you want to use `paceholder` feature, use prop called `inputLabel` instead
+     */
+    placeholder?: string | undefined;
 }
-declare const Autocomplete: <T extends Option>({ inputLabel, error, helperText, inputAutoComplete, autoHighlight, noOptionsText, TextFieldInputProps, ...rest }: AutocompleteProps<T>) => JSX.Element;
+declare const Autocomplete: <T extends Option>({ inputLabel, error, helperText, inputAutoComplete, autoHighlight, noOptionsText, TextFieldInputProps, placeholder, ...rest }: AutocompleteProps<T>) => JSX.Element;
 export default Autocomplete;

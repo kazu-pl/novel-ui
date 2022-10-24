@@ -9,5 +9,5 @@ export interface DashboardProps {
     title: string;
     additionalControls?: React.ReactNode;
 }
-declare const Dashboard: ({ appBarProps, sidebarProps, bgColor, children, title, additionalControls, }: DashboardProps) => JSX.Element;
+declare const Dashboard: ({ appBarProps, sidebarProps: { width: SIDEBAR_WIDTH, ...restOfSidebarProps }, bgColor, children, title, additionalControls, }: DashboardProps) => JSX.Element;
 export default Dashboard;

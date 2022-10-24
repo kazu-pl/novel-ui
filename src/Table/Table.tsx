@@ -22,7 +22,7 @@ export type SortDirection = "asc" | "desc";
 export interface ColumnType<T> {
   title: React.ReactNode;
   /**
-   * specifies what key should column rener
+   * specifies what key should column render
    */
   render: (row: T, index: number) => React.ReactNode;
   /**
@@ -35,9 +35,16 @@ export interface ColumnType<T> {
   isSortable?: boolean;
   /**
    * `noWrap` means that column has no width (useful for last column with action buttons if you don't want that column to be too wide)
+   *
+   * `noWrap` sets `width` attribute of `th` html tag under the hood, the same thing does `width` key . `noWrap` takes priority over `width` key
    */
   noWrap?: boolean;
   isHidden?: boolean;
+  /**
+   * Set `width` attribute of `th` html tag.
+   *
+   * Keep in mind that if you set both `width` and `noWrap` then `width` will be ignored and `noWrap` will take priority
+   */
   width?: number | string;
 }
 
@@ -242,15 +249,7 @@ export default function EnhancedTable<T>({
                     sortDirection={
                       sort?.sortBy === column.key ? sort?.sortDirection : false
                     }
-                    width={column.width}
-                    style={
-                      column.width
-                        ? {
-                            width: column.width,
-                            minWidth: column.width,
-                          }
-                        : undefined
-                    }
+                    width={column.noWrap ? "1px" : column.width || undefined}
                   >
                     {column.isSortable ? (
                       <>
@@ -299,10 +298,7 @@ export default function EnhancedTable<T>({
                     )}
 
                     {visibleColumns.map((column, columnIndex) => (
-                      <TableCell
-                        key={column.key || columnIndex}
-                        width={column.noWrap ? "1px" : undefined}
-                      >
+                      <TableCell key={column.key || columnIndex}>
                         {column.render(row, rowIndex)}
                       </TableCell>
                     ))}

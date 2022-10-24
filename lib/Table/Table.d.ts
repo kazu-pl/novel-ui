@@ -3,7 +3,7 @@ export declare type SortDirection = "asc" | "desc";
 export interface ColumnType<T> {
     title: React.ReactNode;
     /**
-     * specifies what key should column rener
+     * specifies what key should column render
      */
     render: (row: T, index: number) => React.ReactNode;
     /**
@@ -16,9 +16,16 @@ export interface ColumnType<T> {
     isSortable?: boolean;
     /**
      * `noWrap` means that column has no width (useful for last column with action buttons if you don't want that column to be too wide)
+     *
+     * `noWrap` sets `width` attribute of `th` html tag under the hood, the same thing does `width` key . `noWrap` takes priority over `width` key
      */
     noWrap?: boolean;
     isHidden?: boolean;
+    /**
+     * Set `width` attribute of `th` html tag.
+     *
+     * Keep in mind that if you set both `width` and `noWrap` then `width` will be ignored and `noWrap` will take priority
+     */
     width?: number | string;
 }
 export interface TableProps<T> {

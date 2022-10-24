@@ -249,7 +249,16 @@ export default function EnhancedTable<T>({
                     sortDirection={
                       sort?.sortBy === column.key ? sort?.sortDirection : false
                     }
-                    width={column.noWrap ? "1px" : column.width || undefined}
+                    // a) below `width` will be added as html attribute but if you give it let's say 600px but the content in the column will be max 400px then the column won't grow  to 600px because it's content is too small
+                    width={column.noWrap ? "1px" : column.width || undefined} // setting `width` html prop does nothing when also setting `minWidth` via `style`?
+                    // b) that's why I add below `minWidth` style which will force the column to grow to the given width (in our example 600px). Also notice that `width` style won't work, it has to be `minWidth`
+                    style={
+                      column.width
+                        ? {
+                            minWidth: column.width,
+                          }
+                        : undefined
+                    }
                   >
                     {column.isSortable ? (
                       <>

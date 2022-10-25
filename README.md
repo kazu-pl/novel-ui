@@ -1,3 +1,270 @@
+# Error `TypeError: expect(...).toBeInTheDocument is not a function`:
+
+If you have the following error:
+
+```
+ FAIL  src/buttons/Button/Button.test.tsx
+  test
+    × should test (84 ms)
+
+  ● test › should test
+
+    TypeError: expect(...).toBeInTheDocument is not a function
+
+      10 |       expect: expect(btn),
+      11 |     });
+    > 12 |     expect(btn).toBeInTheDocument();
+         |                 ^
+      13 |   });
+      14 | });
+      15 |
+
+      at Object.<anonymous> (src/buttons/Button/Button.test.tsx:12:17)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        5.147 s, estimated 6 s
+Ran all test suites.
+```
+
+But you can see that TypeScript gives you a hints that `toBeInTheDocument` exists on `expect()` then it means you have configured TypeScript correctly (you have the snippets) but you still need to install the package that actually allows you to use `ToBeInTheDocument`. Make sure you've got the library `@testing-library/jest-dom` installed. If not, install it with:
+
+`yarn add -D @testing-library/jest-dom`
+
+and then import it in your `setupTests.ts` file:
+
+```ts
+// <root_dir>/setupTests.ts
+
+// import "@testing-library/jest-dom"; // to chyba nie jest potrzebne wgl
+
+// jest-dom adds custom jest matchers for asserting on DOM nodes.
+// allows you to do things like:
+// expect(element).toHaveTextContent(/react/i)
+// learn more: https://github.com/testing-library/jest-dom
+import "@testing-library/jest-dom/extend-expect";
+```
+
+and then point to that file in `jest.config.json`:
+
+```json
+{
+  "setupFilesAfterEnv": ["<rootDir>/setupTests.ts"]
+}
+```
+
+you can also link `setupTests.ts` file to your `tsconfig.json` file but it's not required:
+
+```json
+{
+  "include": ["setupTests.ts"]
+}
+```
+
+Found [here](https://stackoverflow.com/a/60351942)
+
+# Error `est environment jest-environment-jsdom cannot be found. Make sure the testEnvironment configuration option points to an existing node module.`:
+
+If you run `yarn test` which is just:
+
+```json
+{
+  "scripts": {
+    "test": "jest"
+  }
+}
+```
+
+and you get error like the following one:
+
+```
+$ yarn test
+yarn run v1.22.4
+$ jest
+● Validation Error:
+
+  Test environment jest-environment-jsdom cannot be found. Make sure the testEnvironment configuration option points to an existing node module.
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+
+
+As of Jest 28 "jest-environment-jsdom" is no longer shipped by default, make sure to install it separately.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+```
+
+you should change environment in jest configuration. To do so, paste the following code in jest configuration file like `package.json`:
+
+```json
+{
+  "jest": {
+    "testEnvironment": "jsdom"
+  }
+}
+```
+
+or in `jest.config.json`:
+
+```json
+{
+  "testEnvironment": "jsdom"
+}
+```
+
+and install the missing package via:
+`yarn add -D jest-environment-jsdom`
+
+Found [here](https://stackoverflow.com/a/69228464)
+
+# Error `Cannot find module 'react-dom/client' from 'node_modules/@testing-library/react/dist/pure.js'` when trying to test components with command `yarn test`:
+
+If you run `yarn test` which is just:
+
+```json
+{
+  "scripts": {
+    "test": "jest"
+  }
+}
+```
+
+and you get error like the following one:
+
+```
+$ yarn  test
+yarn run v1.22.4
+$ jest
+ FAIL  src/buttons/Button/Button.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module 'react-dom/client' from 'node_modules/@testing-library/react/dist/pure.js'
+
+    Require stack:
+      node_modules/@testing-library/react/dist/pure.js
+      node_modules/@testing-library/react/dist/index.js
+      src/buttons/Button/Button.test.tsx
+
+    > 1 | import { getByText, render } from "@testing-library/react";
+        | ^
+      2 | import Button from "./Button";
+      3 |
+      4 | describe("test", () => {
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:425:11)
+      at Object.<anonymous> (node_modules/@testing-library/react/dist/pure.js:35:46)
+      at Object.<anonymous> (node_modules/@testing-library/react/dist/index.js:9:13)
+      at Object.<anonymous> (src/buttons/Button/Button.test.tsx:1:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        4.783 s
+Ran all test suites.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+```
+
+then it means that you've installed the newest version of `@testing-library/react` package (13+) but you also have React v17 or lower. The thing is that `@testing-library/react` in version 13+ supports React 18+ and NOT React 17 or lower. So to fix this just install the latest `@testing-library/react` 12 version. You can do this with the following command:
+`npm i -D @testing-library/react@release-12.x`
+OR
+` yarn add --dev @testing-library/react@release-12.x`
+
+Found [here](https://stackoverflow.com/questions/71713405/cannot-find-module-react-dom-client-from-node-modules-testing-library-react#comment127617797_71716438)
+
+Or you can update React to version 18
+
+# Error `Jest encountered an unexpected token` with further description `Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.`:
+
+If you run `yarn test` which is just:
+
+```json
+{
+  "scripts": {
+    "test": "jest"
+  }
+}
+```
+
+and you get error like the following one:
+
+```
+$ yarn  test
+yarn run v1.22.4
+$ jest
+ FAIL  src/buttons/Button/Button.test.tsx
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not conf
+igured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    SyntaxError: D:\MY-VISUAL-NOVEL-PROJECT\novel-ui-lobrary\src\buttons\Button\Button.test.tsx: Support for the experimental syntax 'jsx' isn't c
+urrently enabled (6:34):
+
+      4 | describe("test", () => {
+      5 |   it("should test", () => {
+    > 6 |     const { container } = render(<Button>click me</Button>);
+        |                                  ^
+      7 |
+      8 |     const btn = getByText(container, "click me");
+      9 |
+
+    Add @babel/preset-react (https://github.com/babel/babel/tree/main/packages/babel-preset-react) to the 'presets' section of your Babel config t
+o enable transformation.
+    If you want to leave it as-is, add @babel/plugin-syntax-jsx (https://github.com/babel/babel/tree/main/packages/babel-plugin-syntax-jsx) to the
+ 'plugins' section to enable parsing.
+
+      at instantiate (node_modules/jest-config/node_modules/@babel/parser/src/parse-error/credentials.ts:62:21)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        1.026 s
+Ran all test suites.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+```
+
+then it means your test (jest) configuration is incorrect. To fix this, paste the following code inside of `package.json`:
+
+```json
+{
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": ["ts", "tsx", "js"]
+  }
+}
+```
+
+found [here](https://www.grzegorowski.com/react-typescript-library-rollup-jest-tests-setup)
+Just search for `Then appending following lines to enable Typescript detection and transpilation:`
+
 # React-snap with DashboardLayout and expand `Collapse` component when running react-snap:
 
 When you run react-snap you have to make sure that `Collapse` component is open. When it's open then its children (react -router Links components) are mounted into the DOM and react-snap can detect it and create index.html files.

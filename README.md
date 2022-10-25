@@ -301,10 +301,12 @@ This project is outside of Create React App so the project does not use `react-s
 ```json
 {
   "scripts": {
-    "test": "jest --watch" // --watch is just to run tests in watch mode but you can just put `jest`
+    "test": "jest --watch"
   }
 }
 ```
+
+where `--watch` is just to run tests in watch mode but you can just put `jest`
 
 `3` - add `react-app/jest` rules for eslint in `package.json`:
 
@@ -312,7 +314,7 @@ This project is outside of Create React App so the project does not use `react-s
 {
   "eslintConfig": {
 -   "extends": "react-app",
-+   "extends": ["react-app", "react-app/jest"]
+    "extends": ["react-app", "react-app/jest"]
   }
 }
 ```

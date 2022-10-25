@@ -64,7 +64,7 @@ you can also link `setupTests.ts` file to your `tsconfig.json` file but it's not
 
 Found [here](https://stackoverflow.com/a/60351942)
 
-# Error `est environment jest-environment-jsdom cannot be found. Make sure the testEnvironment configuration option points to an existing node module.`:
+# Error `Jest environment jest-environment-jsdom cannot be found. Make sure the testEnvironment configuration option points to an existing node module.`:
 
 If you run `yarn test` which is just:
 
@@ -95,26 +95,40 @@ error Command failed with exit code 1.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 ```
 
-you should change environment in jest configuration. To do so, paste the following code in jest configuration file like `package.json`:
+you should install the missing package via:
+`yarn add -D jest-environment-jsdom`
 
-```json
-{
-  "jest": {
-    "testEnvironment": "jsdom"
-  }
-}
+Found [here](https://stackoverflow.com/a/69228464)
+
+# Error `The error below may be caused by using the wrong test environment`:
+
+If you got error like this:
+
+```
+  The error below may be caused by using the wrong test environment, see https://jestjs.io/docs/configuration#testenvironment-string.
+    Consider using the "jsdom" test environment.
+
+    ReferenceError: document is not defined
+
+      4 | describe("Button", () => {
+      5 |   it("should be in the document", () => {
+    > 6 |     const { container } = render(<Button>click me</Button>);
+        |                                 ^
+      7 |
+      8 |     const btn = getByText(container, "click me");
+      9 |
+
+      at render (node_modules/@testing-library/react/dist/pure.js:83:5)
+      at Object.<anonymous> (src/buttons/Button/Button.test.tsx:6:33)
 ```
 
-or in `jest.config.json`:
+Then you should change jest environment in jest config file:
 
 ```json
 {
   "testEnvironment": "jsdom"
 }
 ```
-
-and install the missing package via:
-`yarn add -D jest-environment-jsdom`
 
 Found [here](https://stackoverflow.com/a/69228464)
 
@@ -167,10 +181,15 @@ info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this comm
 
 ```
 
-then it means that you've installed the newest version of `@testing-library/react` package (13+) but you also have React v17 or lower. The thing is that `@testing-library/react` in version 13+ supports React 18+ and NOT React 17 or lower. So to fix this just install the latest `@testing-library/react` 12 version. You can do this with the following command:
+then it means that you've installed the newest version of `@testing-library/react` package (13+) but you also have React v17 or lower. The thing is that `@testing-library/react` in version 13+ supports React 18+ and NOT React 17 or lower. So to fix this just install the latest `@testing-library/react` 12 version.
+
+So first remove to current one:
+`yarn remove @testing-library/react`
+
+and then install the required one with:
 `npm i -D @testing-library/react@release-12.x`
 OR
-` yarn add --dev @testing-library/react@release-12.x`
+`yarn add --dev @testing-library/react@release-12.x`
 
 Found [here](https://stackoverflow.com/questions/71713405/cannot-find-module-react-dom-client-from-node-modules-testing-library-react#comment127617797_71716438)
 
@@ -220,7 +239,7 @@ igured to support such syntax.
 
     Details:
 
-    SyntaxError: D:\MY-VISUAL-NOVEL-PROJECT\novel-ui-lobrary\src\buttons\Button\Button.test.tsx: Support for the experimental syntax 'jsx' isn't c
+    SyntaxError: D:\my-project\src\buttons\Button\Button.test.tsx: Support for the experimental syntax 'jsx' isn't c
 urrently enabled (6:34):
 
       4 | describe("test", () => {
@@ -261,6 +280,10 @@ then it means your test (jest) configuration is incorrect. To fix this, paste th
   }
 }
 ```
+
+And install `ts-jest` package which is used to handle `(ts|tsx)` files:
+
+`yarn add ts-jest --dev`
 
 found [here](https://www.grzegorowski.com/react-typescript-library-rollup-jest-tests-setup)
 Just search for `Then appending following lines to enable Typescript detection and transpilation:`

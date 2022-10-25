@@ -306,7 +306,18 @@ This project is outside of Create React App so the project does not use `react-s
 }
 ```
 
-`3` - write some example test like:
+`3` - add `react-app/jest` rules for eslint in `package.json`:
+
+```json
+{
+  "eslintConfig": {
+-   "extends": "react-app",
++   "extends": ["react-app", "react-app/jest"]
+  }
+}
+```
+
+`4` - write some example test like:
 
 ```tsx
 import { getByText, render } from "@testing-library/react";
@@ -323,7 +334,7 @@ describe("Button", () => {
 });
 ```
 
-`4` - run tests with `yarn test`
+`5` - run tests with `yarn test`
 
 From this point you may receive couple of errors but you can find answers to them above this one headline
 

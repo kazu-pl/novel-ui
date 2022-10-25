@@ -19,6 +19,6 @@
     "jsx": "react-jsx",
     "baseUrl": "src"
   },
-  "include": ["src", "types"],
+  "include": ["src", "types", "setupTests.ts"],
   "exclude": ["node_modules", "lib"]
 }

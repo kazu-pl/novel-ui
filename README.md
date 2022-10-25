@@ -288,6 +288,45 @@ And install `ts-jest` package which is used to handle `(ts|tsx)` files:
 found [here](https://www.grzegorowski.com/react-typescript-library-rollup-jest-tests-setup)
 Just search for `Then appending following lines to enable Typescript detection and transpilation:`
 
+# How to add testing with `jest` and `react-testing-library`:
+
+This project is outside of Create React App so the project does not use `react-scripts` (which has already configured testing solution) so we will configure it manually using `jest`.
+
+`1` - install the required packages with:
+
+`yarn add --dev @testing-library/jest-dom @testing-library/react @testing-library/user-event jest @types/jest`
+
+`2` - create script that will run tests in `package.json`:
+
+```json
+{
+  "scripts": {
+    "test": "jest --watch" // --watch is just to run tests in watch mode but you can just put `jest`
+  }
+}
+```
+
+`3` - write some example test like:
+
+```tsx
+import { getByText, render } from "@testing-library/react";
+import Button from "./Button";
+
+describe("Button", () => {
+  it("should be in the document", () => {
+    const { container } = render(<Button>click me</Button>);
+
+    const btn = getByText(container, "click me");
+
+    expect(btn).toBeInTheDocument();
+  });
+});
+```
+
+`4` - run tests with `yarn test`
+
+From this point you may receive couple of errors but you can find answers to them above this one headline
+
 # React-snap with DashboardLayout and expand `Collapse` component when running react-snap:
 
 When you run react-snap you have to make sure that `Collapse` component is open. When it's open then its children (react -router Links components) are mounted into the DOM and react-snap can detect it and create index.html files.

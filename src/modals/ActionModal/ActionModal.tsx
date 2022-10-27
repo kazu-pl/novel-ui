@@ -11,7 +11,7 @@ export interface ActionModalProps
   color?: HeadlineTextColor;
   children: ModalProps["children"];
   onActionBtnClick?: ButtonProps["onClick"];
-  onActionBtnClickPromise?: ButtonProps["onClickPromise"];
+  onActionBtnClickPromise?: () => Promise<any>;
   buttonsTextTransform?: ButtonProps["textTransform"];
   closeBtnText?: string;
   actionBtnText?: string;
@@ -28,7 +28,6 @@ const ActionModal = ({
   buttonsTextTransform,
   closeBtnText = "Close",
   actionBtnText = "Confirm",
-
   ...rest
 }: ActionModalProps) => {
   const [isActionInProgress, setIsActionInProgress] = useState(false);

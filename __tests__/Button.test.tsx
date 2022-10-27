@@ -5,7 +5,9 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
-import Button, { circularProgressDataTestid } from "./Button";
+import Button, {
+  circularProgressDataTestid,
+} from "../src/buttons/Button/Button";
 import { BrowserRouter } from "react-router-dom";
 
 describe("Button", () => {

@@ -310,11 +310,11 @@ where `--watch` is just to run tests in watch mode but you can just put `jest`
 
 `3` - add `react-app/jest` rules for eslint in `package.json`:
 
-```json
+```diff
 {
   "eslintConfig": {
 -   "extends": "react-app",
-    "extends": ["react-app", "react-app/jest"]
++   "extends": ["react-app", "react-app/jest"]
   }
 }
 ```
@@ -466,12 +466,14 @@ Also, pay attention to NOT put any `*.ts` or `*.tsx` file in `types` folder - it
 - Run command `yarn add -D eslint-config-react-app @typescript-eslint/eslint-plugin@^4.0.0 @typescript-eslint/parser@^4.0.0 babel-eslint@^10.0.0 eslint@^7.5.0 eslint-plugin-flowtype@^5.2.0 eslint-plugin-import@^2.22.0 eslint-plugin-jsx-a11y@^6.3.1 eslint-plugin-react@^7.20.3 eslint-plugin-react-hooks@^4.0.8`
 - in `package.json` add:
 
-```json
+> **_NOTE:_** Above command will install some specific versions of those plugins. At some point eslint stoped working for me and I discovered that I had to remove above plugins and install them again without telling any specific version. Looks like the VSC eslint extension got updated and stopped working with above specific old versions
 
- "eslintConfig": {
+```json
+{
+  "eslintConfig": {
     "extends": "react-app"
   }
-
+}
 ```
 
 OR create `.eslintrc.json` and paste:
@@ -482,7 +484,9 @@ OR create `.eslintrc.json` and paste:
 }
 ```
 
-more info [here](https://www.npmjs.com/package/eslint-config-react-app)
+You can also add `jest` rules if you write types: `"extends": ["react-app", "react-app/jest"]`
+
+More info [here](https://www.npmjs.com/package/eslint-config-react-app)
 
 ---
 

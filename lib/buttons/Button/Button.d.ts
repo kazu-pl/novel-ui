@@ -1,5 +1,6 @@
 /// <reference types="react" />
 import { ButtonProps as MuiButtonProps } from "@mui/material/Button";
+export declare const circularProgressDataTestid = "btn-CircularProgress";
 export declare type TextTransform = "capitalize" | "lowercase" | "none" | "uppercase" | "inherit" | "initial" | "unset";
 export interface ButtonAsLinksProps {
     target?: "_self" | "_blank" | "_parent" | "_top";
@@ -9,7 +10,7 @@ export interface ButtonAsLinksProps {
 }
 export interface ButtonProps extends MuiButtonProps, ButtonAsLinksProps {
     isLoading?: boolean;
-    onClickPromise?: () => Promise<void>;
+    onClickPromise?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<any>;
     textTransform?: TextTransform;
     /**
      * component prop describes underlaying HTML tag.

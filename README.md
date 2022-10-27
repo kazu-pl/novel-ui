@@ -1,3 +1,33 @@
+# Notes about testing and rollup configuration:
+
+`1` - you can't have tests next to the actuall components becuase test names matches the rollup input pattern so tests would be present in `lib` folder lib building. The pattern is the following:
+
+```js
+// rollup.config.js
+
+const rollupConfig = {
+  input: ["src/**/*.tsx", "src/**/index.ts"], // file Button.test.tsx also matches "src/**/*.tsx" pattern
+};
+
+export default rollupConfig;
+```
+
+And I couldn't find a way to exclude tests. So if you can't place tests next to their components you can place them in `__tests__` folder in root directory.
+
+`3` - You can't include `__tests__` folder in `tsconfig.json` becasue it will put `__tests__` folder into `lib` folder after running `yarn build`
+
+`3` - You can't include `setupTests.ts` file in `tsconfig.json` becasue it will put `src` folder and `setupTests.ts` file into `lib` folder after running `yarn build`
+
+`4` - You can have `setupTests.ts` file in root directory (if you don't inlude it in `package.json`) but if you want to have `setupTests.ts` file next to the actuall tests in `__tests__` you would get error while `yarn test` beucase this file does not contain any tests so you have to exclude it from tests with the following option in `jest.config.json`:
+
+```json
+{
+  "modulePathIgnorePatterns": ["<rootDir>/__tests__/setupTests.ts"]
+}
+```
+
+Found [here](https://stackoverflow.com/a/40486671)
+
 # Error `TypeError: expect(...).toBeInTheDocument is not a function`:
 
 If you have the following error:
@@ -35,9 +65,7 @@ But you can see that TypeScript gives you a hints that `toBeInTheDocument` exist
 and then import it in your `setupTests.ts` file:
 
 ```ts
-// <root_dir>/setupTests.ts
-
-// import "@testing-library/jest-dom"; // to chyba nie jest potrzebne wgl
+// setupTests.ts
 
 // jest-dom adds custom jest matchers for asserting on DOM nodes.
 // allows you to do things like:
@@ -50,17 +78,33 @@ and then point to that file in `jest.config.json`:
 
 ```json
 {
-  "setupFilesAfterEnv": ["<rootDir>/setupTests.ts"]
+  "setupFilesAfterEnv": ["<rootDir>/your/path/to/file/setupTests.ts"]
 }
 ```
 
-you can also link `setupTests.ts` file to your `tsconfig.json` file but it's not required:
+If you placed this file in a url that matches `jest` url under which `jest` looks for tests then simply exclude this particualr file in `jest.config.json` file:
+
+```json
+{
+  "modulePathIgnorePatterns": ["<rootDir>/__tests__/setupTests.ts"]
+}
+```
+
+Found [here](https://stackoverflow.com/a/40486671)
+
+---
+
+> Keep in mind you can't link `setupTests.ts` file to your `tsconfig.json` file like below:
 
 ```json
 {
   "include": ["setupTests.ts"]
 }
 ```
+
+because when you do that, whole `src` folder and that file `setupTests.ts` will be included in `lib` folder after building via `yarn build`
+
+---
 
 Found [here](https://stackoverflow.com/a/60351942)
 
@@ -310,11 +354,11 @@ where `--watch` is just to run tests in watch mode but you can just put `jest`
 
 `3` - add `react-app/jest` rules for eslint in `package.json`:
 
-```json
+```diff
 {
   "eslintConfig": {
 -   "extends": "react-app",
-    "extends": ["react-app", "react-app/jest"]
++   "extends": ["react-app", "react-app/jest"]
   }
 }
 ```
@@ -466,12 +510,14 @@ Also, pay attention to NOT put any `*.ts` or `*.tsx` file in `types` folder - it
 - Run command `yarn add -D eslint-config-react-app @typescript-eslint/eslint-plugin@^4.0.0 @typescript-eslint/parser@^4.0.0 babel-eslint@^10.0.0 eslint@^7.5.0 eslint-plugin-flowtype@^5.2.0 eslint-plugin-import@^2.22.0 eslint-plugin-jsx-a11y@^6.3.1 eslint-plugin-react@^7.20.3 eslint-plugin-react-hooks@^4.0.8`
 - in `package.json` add:
 
-```json
+> **_NOTE:_** Above command will install some specific versions of those plugins. At some point eslint stoped working for me and I discovered that I had to remove above plugins and install them again without telling any specific version. Looks like the VSC eslint extension got updated and stopped working with above specific old versions
 
- "eslintConfig": {
+```json
+{
+  "eslintConfig": {
     "extends": "react-app"
   }
-
+}
 ```
 
 OR create `.eslintrc.json` and paste:
@@ -482,7 +528,9 @@ OR create `.eslintrc.json` and paste:
 }
 ```
 
-more info [here](https://www.npmjs.com/package/eslint-config-react-app)
+You can also add `jest` rules if you write types: `"extends": ["react-app", "react-app/jest"]`
+
+More info [here](https://www.npmjs.com/package/eslint-config-react-app)
 
 ---
 
@@ -564,3 +612,7 @@ export default CustomExample;
 ---
 
 This project setup was created with help of: [this site](https://prateeksurana.me/blog/react-component-library-using-storybook-6/)
+
+```
+
+```

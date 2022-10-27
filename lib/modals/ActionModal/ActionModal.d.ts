@@ -8,7 +8,7 @@ export interface ActionModalProps extends Pick<ModalProps, "maxWidthOnDesktop" |
     color?: HeadlineTextColor;
     children: ModalProps["children"];
     onActionBtnClick?: ButtonProps["onClick"];
-    onActionBtnClickPromise?: ButtonProps["onClickPromise"];
+    onActionBtnClickPromise?: () => Promise<any>;
     buttonsTextTransform?: ButtonProps["textTransform"];
     closeBtnText?: string;
     actionBtnText?: string;

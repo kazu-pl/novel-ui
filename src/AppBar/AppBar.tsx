@@ -12,6 +12,11 @@ import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import { StyledListItemLink, StyledToolbar } from "./AppBar.styled";
 
+export const appBarMenuTestid = "appBar-Menu";
+export const appBarShowMoreBtnTestid = "appBar-showMoreBtn";
+export const appBarNotificationsBtn = "appBar-notificationsBtn";
+export const appBarNotificationsBadge = "appBar-notificationsBadge";
+
 export interface AppBarProps {
   logo?: React.ReactNode;
   userData: {
@@ -65,9 +70,13 @@ const AppBarLayout = ({
                 size="large"
                 aria-label="show new notifications"
                 color="inherit"
+                data-testid={appBarNotificationsBtn}
               >
                 <Badge badgeContent={newNotificationsCounter} color="error">
-                  <ColoredIconWrapper color="white">
+                  <ColoredIconWrapper
+                    color="white"
+                    data-testid={appBarNotificationsBadge}
+                  >
                     <NotificationsIcon />
                   </ColoredIconWrapper>
                 </Badge>
@@ -83,6 +92,7 @@ const AppBarLayout = ({
                 <Avatar
                   aria-label="recipe"
                   src={userData.avatarLink || undefined}
+                  data-testid="appBar-avatar"
                 >
                   {userData.avatarLink ? undefined : userData.title[0]}
                 </Avatar>
@@ -101,6 +111,7 @@ const AppBarLayout = ({
             onClick={handleProfileMenuOpen}
             color="default"
             edge="end"
+            data-testid={appBarShowMoreBtnTestid}
           >
             <ColoredIconWrapper color="white">
               <MoreIcon />
@@ -123,6 +134,7 @@ const AppBarLayout = ({
         }}
         open={isMenuOpen}
         onClose={handleMenuClose}
+        data-testid={appBarMenuTestid}
       >
         {userDropdown.map((item) => (
           <MenuItem

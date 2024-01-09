@@ -69,6 +69,15 @@ AsDownloadBtn.args = {
   download: true,
 } as ButtonProps;
 
+export const AsDownloadBtnRemote = Template.bind({});
+AsDownloadBtnRemote.args = {
+  children: "Click to download",
+  variant: "contained",
+  href:
+    "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+  download: true,
+} as ButtonProps;
+
 export const AsReactRouterLink = Template.bind({});
 AsReactRouterLink.args = {
   children: "Go to account sub-page",

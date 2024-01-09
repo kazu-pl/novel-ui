@@ -1,3 +1,72 @@
+# INFO ABOUT THIS PROJEKT
+
+It was developed with node **14.18.2** and to run this project, you have to switch to this node version
+
+---
+
+# TODO:
+
+1 - there are changes in stash related to inputs. When have some free time, use `git stash apply` and restore them to work on them
+2 - use node `18.12.1` and build this library. There will be an error and you have to resolve it (README already contains the solution, it's titled `Error: Package subpath './package.json' is not defined by "exports"`).There will be also another error `(!) Plugin rpt2: You are using a Rollup version '<2.60.0'. This may result in type-only files being ignored.d.` so you have to check if this another error was also present when using older node version (like 14.18.2)
+3 - remove charts `react-chartjs-2` and others as they are not even used anymore
+
+# `Error: Package subpath './package.json' is not defined by "exports"` Error
+
+If you have error like this:
+
+```powershell
+$ yarn build
+yarn run v1.22.4
+$ rollup -c
+Error loading `tslib` helper library.
+[!] Error: Package subpath './package.json' is not defined by "exports" in D:\MY-VISUAL-NOVEL-PROJECT\novel-ui-lobrary\node
+
+_modules\rollup-plugin-typescript2\node_modules\tslib\package.json
+Error: Package subpath './package.json' is not defined by "exports" in D:\MY-VISUAL-NOVEL-PROJECT\novel-ui-lobrary\node_mod
+
+ules\rollup-plugin-typescript2\node_modules\tslib\package.json
+    at new NodeError (node:internal/errors:393:5)
+    at throwExportsNotFound (node:internal/modules/esm/resolve:358:9)
+    at packageExportsResolve (node:internal/modules/esm/resolve:668:3)
+    at resolveExports (node:internal/modules/cjs/loader:529:36)
+    at Function.Module._findPath (node:internal/modules/cjs/loader:569:31)
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:981:27)
+    at Function.Module._load (node:internal/modules/cjs/loader:841:27)
+    at Module.require (node:internal/modules/cjs/loader:1061:19)
+    at require (node:internal/modules/cjs/helpers:103:18)
+    at Object.<anonymous> (D:\MY-VISUAL-NOVEL-PROJECT\novel-ui-lobrary\node_modules\rollup-plugin-typescript2\src\tslib.ts:
+
+11:23)
+
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+```
+
+Then it probably means that node version got updated. I had this issue when I switched my node version to `18.12.1` (previously developing it on `14.18.2`).
+
+To solve this issue simply remove `rollup-plugin-typescript2` and install the latest version with:
+`yarn add rollup-plugin-typescript2`
+
+Then if you will try to run `yarn build` and got error:
+
+```powershell
+
+$ yarn build
+yarn run v1.22.4
+$ rollup -c
+
+src/**/*.tsx, src/**/index.ts → lib...
+(!) Plugin rpt2: You are using a Rollup version '<2.60.0'. This may result in type-only files being ignored.d.
+created lib in 28.9s
+Done in 29.68s.
+
+```
+
+the imporatant part is `(!) Plugin rpt2: You are using a Rollup version '<2.60.0'. This may result in type-only files being ignored.d.`
+
+then you should install the latest version of `rollup`
+
 # Notes about testing and rollup configuration:
 
 `1` - you can't have tests next to the actuall components becuase test names matches the rollup input pattern so tests would be present in `lib` folder lib building. The pattern is the following:

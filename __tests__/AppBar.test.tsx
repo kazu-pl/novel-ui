@@ -34,7 +34,7 @@ describe("<AppBar />", () => {
     expect(menu).not.toBeVisible();
   });
 
-  it("should open menu after user clicks", () => {
+  it("should open menu after user clicks show more btn", () => {
     render(<AppBar userData={{ title: "" }} userDropdown={[]} />);
 
     const menu = screen.queryByTestId(appBarMenuTestid);

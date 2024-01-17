@@ -10,6 +10,161 @@ It was developed with node **14.18.2** and to run this project, you have to swit
 2 - use node `18.12.1` and build this library. There will be an error and you have to resolve it (README already contains the solution, it's titled `Error: Package subpath './package.json' is not defined by "exports"`).There will be also another error `(!) Plugin rpt2: You are using a Rollup version '<2.60.0'. This may result in type-only files being ignored.d.` so you have to check if this another error was also present when using older node version (like 14.18.2)
 3 - remove charts `react-chartjs-2` and others as they are not even used anymore
 
+# Preview of selected image via input type="file":
+
+If you select file and look for its object of type `File` then you will have something like this:
+
+```tsx
+const file: File = {
+  lastModified: 1640993859500,
+  name: "somefile.PNG",
+  preview: "blob:http://localhost:4000/0cf7abe3-853d-43c7-8735-9cf0959803vc",
+  size: 66112,
+  type: "image/png",
+  webkitRelativePath: "",
+};
+```
+
+and you can use `preview` attribute as the value of `src` attribute of an `img` tag:
+
+```jsx
+const Preview = (item) => {
+  return <img alt="preview the image" src={item.preview} />;
+};
+```
+
+OR you can even create a whole hook called `usePreviewUrl` to get the preview url:
+
+```jsx
+import { useState, useEffect } from "react";
+
+const isTiffFile = (file) => file.type === "image/tiff";
+
+const usePreviewUrl = (file) => {
+  const [previewUrl, setPreviewUrl] = useState(null);
+
+  useEffect(() => {
+    if (isTiffFile(file)) {
+      import("tiff.js").then((Tiff) => {
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+          const tiff = new Tiff({ buffer: event.target.result });
+          setPreviewUrl(tiff.toDataURL());
+        };
+
+        reader.readAsArrayBuffer(file);
+      });
+    } else {
+      setPreviewUrl(file.preview);
+    }
+  }, [file]);
+
+  return previewUrl;
+};
+
+usePreviewUrl.pluginName = "usePreviewUrl";
+
+export default usePreviewUrl;
+```
+
+and you can use the hook like this:
+
+```jsx
+import LoadableAvatar from "components/Avatars/LoadableAvatar";
+import usePreviewUrl from "hooks/usePreviewUrl";
+
+const LOADER_GIF = "/images/ajax-loader.gif";
+
+const styles = () => ({
+  root: {},
+});
+
+const FilePreviewThumbnail = ({ file }) => {
+  const previewUrl = usePreviewUrl(file); // the usage of hook
+
+  return <LoadableAvatar key={previewUrl} src={previewUrl || LOADER_GIF} />;
+};
+
+export default FilePreviewThumbnail;
+```
+
+where `LoadableAvatar` component is:
+
+```jsx
+import React, { useRef, useEffect } from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: theme.colors.lightSilver,
+  },
+  img: {
+    opacity: "0",
+    transition: "opacity 600ms",
+  },
+  unloaded: {
+    opacity: "none",
+  },
+  loaded: {
+    opacity: "1",
+  },
+  fallback: {
+    width: "100%",
+    height: "100%",
+  },
+}));
+
+// function useIsMounted() {
+//   let isMounted = useRef(true);
+
+//   useEffect(() => {
+//     return () => {
+//       isMounted = null;
+//     };
+//   }, []);
+//   return isMounted;
+// }
+
+const onLoad = (ref, loaddedClass) => () => {
+  if (ref && ref.current) {
+    ref.current.classList.add(loaddedClass);
+  }
+};
+
+const LoadableAvatar = ({ className, ...other }) => {
+  const classes = useStyles();
+  let imgEl = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      imgEl = null;
+    };
+  }, []);
+
+  return (
+    <Avatar
+      className={className}
+      classes={{
+        root: classes.root,
+        img: classes.img,
+      }}
+      imgProps={{
+        ref: imgEl,
+        onLoad: onLoad(imgEl, classes.loaded),
+      }}
+      {...other}
+    >
+      <div className={classes.fallback} />
+    </Avatar>
+  );
+};
+
+export default LoadableAvatar;
+```
+
 # `Error: Package subpath './package.json' is not defined by "exports"` Error
 
 If you have error like this:

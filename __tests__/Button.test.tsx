@@ -114,7 +114,7 @@ describe("Button", () => {
       new Promise((res, rej) => {
         setTimeout(() => {
           res("");
-        }, 1000);
+        }, 200);
       });
 
     render(<Button onClickPromise={makeSomeAsyncWork}>text</Button>);
@@ -131,7 +131,7 @@ describe("Button", () => {
   });
 
   it("should NOT be disabled and NOT showing circular progress when user clicked on btn with async work and the work completed", async () => {
-    const TIMEOUT_IN_MILISECONDS = 1000;
+    const TIMEOUT_IN_MILISECONDS = 200;
 
     const makeSomeAsyncWork = async () =>
       new Promise((res, rej) => {

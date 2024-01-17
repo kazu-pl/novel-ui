@@ -45,7 +45,9 @@ const usePreviewUrl = (file) => {
 
   useEffect(() => {
     if (isTiffFile(file)) {
+      // below is lazy loading of 'tiff.js' npm package
       import("tiff.js").then((Tiff) => {
+        // 'tiff.js' is just a npm package and it's its full name: 'tiff.js'
         const reader = new FileReader();
 
         reader.onload = (event) => {

@@ -10,6 +10,32 @@ It was developed with node **14.18.2** and to run this project, you have to swit
 2 - use node `18.12.1` and build this library. There will be an error and you have to resolve it (README already contains the solution, it's titled `Error: Package subpath './package.json' is not defined by "exports"`).There will be also another error `(!) Plugin rpt2: You are using a Rollup version '<2.60.0'. This may result in type-only files being ignored.d.` so you have to check if this another error was also present when using older node version (like 14.18.2)
 3 - remove charts `react-chartjs-2` and others as they are not even used anymore
 
+# How to pass `data-` prop (for example `data-testid`) to nested component via its props object prop like `PaperProps`:
+
+Example below:
+
+```tsx
+
+  <Menu
+    id="primary-search-account-menu"
+    PaperProps={{
+      // @ts-ignore
+      "data-testid": LangSwitcherMenuTestId, // just put the data- attr in " " characters. Menu component will spread props from the object passed as PaperProps to the Paper component anyway.
+    }}
+  >
+
+```
+
+# How to test in jest if an html element has an attribute set to some value (for example if `img` tag has `src` set to something):
+
+Example:
+
+```tsx
+const img = screen.getByTestId("image");
+
+expect(img).toHaveProperty("src", "some-url.com");
+```
+
 # Preview of selected image via input type="file":
 
 If you select file and look for its object of type `File` then you will have something like this:

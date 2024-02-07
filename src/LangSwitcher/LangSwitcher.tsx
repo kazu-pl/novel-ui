@@ -7,6 +7,11 @@ import { useState } from "react";
 
 import { StyledListItemLink } from "./LangSwitcher.styled";
 
+export const LangSwitcherBthWithCurrLangTestId = "LangSwitcher-wrapper";
+export const LangSwitcherMenuTestId = "LangSwitcher_menuPaper";
+export const LangSwtchingMenuItemTestIdPrefix = "LangSwitcher_LangMenuLink-";
+export const LangSwtchingLinkTestIdPrefix = "LangSwitcher_LangLink-";
+
 export interface LangSwitcherProps<Lang> {
   langs: {
     icon: React.ReactNode;
@@ -17,7 +22,7 @@ export interface LangSwitcherProps<Lang> {
   activeLang: Lang;
 }
 
-const LangSwitcher = <Lang,>({
+const LangSwitcher = <Lang extends string>({
   langs,
   activeLang,
 }: LangSwitcherProps<Lang>) => {
@@ -42,6 +47,7 @@ const LangSwitcher = <Lang,>({
         aria-haspopup="true"
         onClick={handleProfileMenuOpen}
         color="default"
+        data-testid={LangSwitcherBthWithCurrLangTestId}
       >
         {langs.filter((item) => item.lang === activeLang)[0].icon}
       </IconButton>
@@ -59,10 +65,22 @@ const LangSwitcher = <Lang,>({
         }}
         open={isMenuOpen}
         onClose={handleMenuClose}
+        PaperProps={{
+          // @ts-ignore
+          "data-testid": LangSwitcherMenuTestId,
+        }}
       >
         {langs.map((item, index) => (
-          <MenuItem key={index} onClick={handleMenuClose} sx={{ p: 0 }}>
-            <StyledListItemLink to={item.to}>
+          <MenuItem
+            key={index}
+            onClick={handleMenuClose}
+            sx={{ p: 0 }}
+            data-testid={LangSwtchingMenuItemTestIdPrefix + item.lang}
+          >
+            <StyledListItemLink
+              to={item.to}
+              data-testid={LangSwtchingLinkTestIdPrefix + item.lang}
+            >
               <div style={{ marginRight: 8 }}>{item.icon}</div> {item.label}
             </StyledListItemLink>
           </MenuItem>

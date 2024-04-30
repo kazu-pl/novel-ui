@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SidebarMenuItem /> should render correctly and match the snapshot 1`] = `
+<a
+  className="sc-eCstlR dBUzxv"
+  href="/notifications"
+  onClick={[Function]}
+>
+  <div
+    className="MuiListItemIcon-root-cghXcT cOXiUN MuiListItemIcon-root sc-hKgJUU juwqGD"
+  >
+    <svg
+      aria-hidden={true}
+      className="MuiSvgIcon-root-ffGNMi ufROg MuiSvgIcon-root MuiSvgIcon-fontSizeMedium"
+      data-testid="NotificationsIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"
+      />
+    </svg>
+  </div>
+  <div
+    className="MuiListItemText-root-eslPth awSxi MuiListItemText-root sc-dlfnuX iOaXd"
+  >
+    <span
+      className="MuiTypography-root-bWuLxc hGTtkx MuiTypography-root MuiTypography-body1 MuiListItemText-primary"
+    >
+      Notifications
+    </span>
+  </div>
+</a>
+`;

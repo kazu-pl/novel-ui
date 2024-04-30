@@ -36,6 +36,60 @@ const img = screen.getByTestId("image");
 expect(img).toHaveProperty("src", "some-url.com");
 ```
 
+# Error `if (error?.stack) {`:
+
+```bash
+D:\your-library\node_modules\jest-cli\build\run.js:129
+    if (error?.stack) {
+              ^
+
+158:10)
+    at Module.load (internal/modules/cjs/loader.js:986:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:879:14)
+    at Module.require (internal/modules/cjs/loader.js:1026:19)
+    at require (internal/modules/cjs/helpers.js:72:18)
+    at Object.<anonymous> (D:\your-library\node_modules\jest-cli\build\index.js:12:12)
+    at Module._compile (internal/modules/cjs/loader.js:1138:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1158:10)
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+```
+
+It means that you have older node version installed, for example `12.18.1` while the application was developed with `14.18.2`
+
+# Error `Cannot read property 'isBatchingLegacy' of undefined` when trying to test snapshots:
+
+If you have an error like this when trying to test snapshots:
+
+```powershell
+
+ FAIL  __tests__/SidebarMenuItem.test.tsx
+  <SidebarMenuItem />
+    × should render correctly and be visible and in the document (2 ms)
+
+  ● <SidebarMenuItem /> › should render correctly and be visible and in the document
+
+    TypeError: Cannot read property 'isBatchingLegacy' of undefined
+
+      83 |
+      84 |     const tree = renderer
+    > 85 |       .create(
+         |        ^
+      86 |         <SidebarMenuItem
+      87 |           variant="no-dropdown"
+      88 |           icon={<NotificationsIcon />}
+
+```
+
+Then it means your version of `reacat-test-rerender` is newer than the react version your project has installed. Update it to the same version as react by uninstalling the `react-test-rerender` package alongside with its types package and install the correct version of both of them with the following commands:
+
+`yarn add react-test-renderer@17.0.2 -D`
+
+and also the types package:
+
+`yarn add @types/react-test-renderer@17.0.2 -D`
+
 # Preview of selected image via input type="file":
 
 If you select file and look for its object of type `File` then you will have something like this:
@@ -191,6 +245,151 @@ const LoadableAvatar = ({ className, ...other }) => {
 };
 
 export default LoadableAvatar;
+```
+
+# How to send files to server with a delay so requests won't be canceled by cancelToken (axios) or API
+
+```tsx
+class PrintTemplatesUploader extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      files: [],
+      isUploading: false,
+    };
+  }
+
+  /**
+   * This action removes file already send and fulfiled so they can be no longer dispalyed on the list of files pending to be uploaded
+   */
+  removeFile = (file) => {
+    this.setState((state) => ({
+      files: filter(state.files, (item) => item !== file),
+    }));
+  };
+
+  /**
+   * set files to be uploaded when user selects files form their disk
+   */
+  handleFilesChange = (files) => {
+    this.setState({
+      files,
+    });
+  };
+
+  /**
+   * Set loading flag to true so user can see CircularProgress when files are uploaded
+   */
+  handleUploadStart = (files) => {
+    this.setState({
+      uploading: true,
+    });
+  };
+
+  /**
+   * Set loading flag to false so user no longer can see CircularProgress and fetch fresh data
+   */
+  handleUploadEnd = ({ uploaded, rejected }) => {
+    //  you can do something wit uploaded and rejected here
+
+    this.setState({
+      uploading: false,
+    });
+
+    actions.fetchPrintTemplatesForProcedure(this.procedureTargetType);
+  };
+
+  /**
+   * @param {*} request request that uploads a file
+   * @param {*} file it's a file to be uploaded
+   * @param {*} delayMultiplier
+   *
+   * This funciton is used to delay a uplading template - without it backend will thrown 500 error for most of uploading requests as they comes too fast or axios will cancel request with cancelToken (if you use cancelToken)
+   */
+  makeRequestWithDelay = async (request, file, delayMultiplier = 0) => {
+    const delay = (delayMultiplier + 1) * 500;
+
+    await new Promise((res) =>
+      setTimeout(() => {
+        res();
+      }, delay)
+    );
+
+    return request(file);
+  };
+
+  handleMultiUpload = (files) => {
+    const { onUploadEnd } = this.props;
+
+    handleUploadStart(); // set uploading flag to true so user can see CircularProgress for the time files are uploading
+
+    const promises = map(files, (file, index) =>
+      this.makeRequestWithDelay(this.handleSingleUpload, file, index).catch(
+        (error) => error
+      )
+    );
+
+    Promise.all(promises).then((res) => {
+      if (handleUploadEnd) {
+        // below code is usually not really needed. Just the Promise.all(promises) is needed but below code usually won't be needed
+        const uploaded = [];
+        const rejected = [];
+
+        each(res, (item, index) => {
+          if (item.error) {
+            rejected.push(files[index]);
+          } else {
+            uploaded.push(get(item, "payload.data[0]"));
+          }
+        });
+
+        // only this handleUploadEnd is needed - to hide CircularProgress
+        handleUploadEnd({
+          uploaded: compact(uploaded),
+          rejected: compact(rejected),
+        });
+      }
+    });
+  };
+
+  /**
+   * @param {*} file It's the file to be uploaded to server
+   * @returns redux action object with meta, payload, type
+   */
+  handleSingleUpload = async (file) => {
+    const { actions } = this.props;
+
+    return actions.uploadPrintTemplate(file, file.name).then((res) => {
+      this.removeFile(file); // remove uploaaded file from list displaying files wainting to be uploaded as it has just got uploaded
+      return res;
+    });
+  };
+
+  render() {
+    const { multiple = true } = this.props;
+    const { files } = this.state;
+    return (
+      <PrintTemplatesUpload
+        files={files}
+        onChange={this.handleFilesChange}
+        onUpload={this.handleMultiUpload}
+        multiple={multiple} // allow user to select multiple files in files explorer window
+      />
+    );
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(
+    {
+      uploadPrintTemplate,
+    },
+    dispatch
+  ),
+});
+
+export default connect(null, mapDispatchToProps)(PrintTemplatesUploader);
 ```
 
 # `Error: Package subpath './package.json' is not defined by "exports"` Error

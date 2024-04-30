@@ -7,7 +7,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import { BrowserRouter } from "react-router-dom";
 
 import { ArgType } from "../types/storybookArgs";
-import Box from "@mui/material/Box";
+// import Box from "@mui/material/Box";
 
 import Sidebar, { SidebarProps } from "../src/Sidebar";
 
@@ -19,9 +19,9 @@ export default {
 
 const Template: Story<SidebarProps> = (args) => (
   <BrowserRouter>
-    <Box height="100vh">
-      <Sidebar {...args} />
-    </Box>
+    {/* <Box height="100vh"> */}
+    <Sidebar {...args} />
+    {/* </Box> */}
   </BrowserRouter>
 );
 

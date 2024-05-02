@@ -4,6 +4,29 @@ import AddIcon from "@mui/icons-material/Add";
 import FormHelperText from "@mui/material/FormHelperText";
 import SingleFile, { SingleFileProps, ExtendedFile } from "./SingleFile";
 
+/**
+ * @todo
+ *
+ * I could split FileInputProps into 4 types:
+ * FileInputProps rename to FileInputPropsBase and remove `value` and `multiple` from it
+ *
+ * Then I could create 2nd type FileInputPropsMultiple which could extend FileInputPropsBase and add:
+ * ```ts
+ * value: ExtendedFile[] | null
+ * multiple: true
+ * ```
+ *
+ * Then I could create 3rd type FileInputPropsSingle which could extend FileInputPropsBase and add:
+ * ```ts
+ * value: ExtendedFile | null
+ * multiple: false
+ * ```
+ *
+ * And finally I could create 4th type:
+ * type FileInputProps = FileInputPropsBase | FileInputPropsBase
+ *
+ * It would be more strict but would require always passing `multiple` prop with `false` or `true` as a value
+ */
 export interface FileInputProps {
   name: string;
   id: string;
@@ -93,7 +116,7 @@ export interface FileInputProps {
    * // the same as with images. The only difference is that you render `<embed src={url} />` instead of `<img />`
    */
   onPreviewFileIconClick?: SingleFileProps["onPreviewFileIconClick"];
-  value: ExtendedFile | ExtendedFile[];
+  value: ExtendedFile | ExtendedFile[] | null;
   multiple?: boolean;
   helperText?: string;
   error?: boolean;

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { RadioProps as MuiRadioProps } from "@mui/material/Radio";
 export interface RadioProps extends MuiRadioProps {
     error?: boolean;

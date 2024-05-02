@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { AutocompleteProps, Option } from "../inputs/Autocomplete";
 export interface AutocompleteSyncFormikProps<T> extends Omit<AutocompleteProps<T>, "value" | "onChange" | "getOptionLabel" | "isOptionEqualToValue" | "inputValue" | "onInputChange" | "TextFieldInputProps"> {
     name: string;

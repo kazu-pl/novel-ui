@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { TextFieldProps as MuiTextFieldProps } from "@mui/material/TextField";
 export declare type TextFieldProps = MuiTextFieldProps & {
     clearable?: boolean;

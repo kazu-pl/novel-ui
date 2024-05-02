@@ -6,9 +6,8 @@ It was developed with node **14.18.2** and to run this project, you have to swit
 
 # TODO:
 
-1 - there are changes in stash related to inputs. When have some free time, use `git stash apply` and restore them to work on them
-2 - use node `18.12.1` and build this library. There will be an error and you have to resolve it (README already contains the solution, it's titled `Error: Package subpath './package.json' is not defined by "exports"`).There will be also another error `(!) Plugin rpt2: You are using a Rollup version '<2.60.0'. This may result in type-only files being ignored.d.` so you have to check if this another error was also present when using older node version (like 14.18.2)
-3 - remove charts `react-chartjs-2` and others as they are not even used anymore
+1 - use node `18.12.1` and build this library. There will be an error and you have to resolve it (README already contains the solution, it's titled `Error: Package subpath './package.json' is not defined by "exports"`).There will be also another error `(!) Plugin rpt2: You are using a Rollup version '<2.60.0'. This may result in type-only files being ignored.d.` so you have to check if this another error was also present when using older node version (like 14.18.2)
+2 - remove charts `react-chartjs-2` and others as they are not even used anymore
 
 # How to pass `data-` prop (for example `data-testid`) to nested component via its props object prop like `PaperProps`:
 

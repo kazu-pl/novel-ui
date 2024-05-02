@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { ChartData, ChartOptions } from "chart.js";
 export interface BarChartProps {
     /**

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { SidebarMenuItemProps } from "./SidebarMenuItem";
 export interface SidebarProps {
     width?: number;

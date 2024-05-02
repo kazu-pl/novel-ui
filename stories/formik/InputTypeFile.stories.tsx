@@ -1,3 +1,4 @@
+import React from "react";
 import { Meta } from "@storybook/react/types-6-0";
 import * as yup from "yup";
 import { Formik, Form, FormikHelpers } from "formik";
@@ -38,7 +39,8 @@ export const SingleFile = () => {
   ) => {
     console.log({ values });
 
-    const fileFromInputRef = inputFileRef.current.files[0];
+    // this function handleAsyncSubmit will be fired only when file really exists because I add yup validation with .required() condition so below .files[0] will exist
+    const fileFromInputRef = inputFileRef.current!.files![0];
 
     const formData = new FormData();
     formData.append("file", fileFromInputRef); // send this to server like below:
@@ -116,7 +118,7 @@ interface MultipleFormValues {
 }
 
 const validationMultipleFilesSchema = yup.object({
-  files: yup.array().of(yup.object()).min(1).required().nullable(),
+  files: yup.array().of(yup.object()).min(2).required().nullable(),
 });
 
 const initialMultipleFileValues: MultipleFormValues = {
@@ -132,7 +134,10 @@ export const MultipleFiles = () => {
 
     const formData = new FormData();
 
-    values.files.forEach((file) => {
+    /**
+     * values.files can't be null because in yup I set validation condition that it has to exist and contain at least 2 items
+     */
+    values.files!.forEach((file) => {
       formData.append("files", file.file);
     });
     // after using forEach, you can send it to server like below:
@@ -238,10 +243,13 @@ export const MultipleImagesWithPreviw = () => {
   const onDeleteIconClick = (id: string) => {
     previewUrl && URL.revokeObjectURL(previewUrl);
     setFiles((prev) => prev.filter((prevFile) => prevFile.id !== id));
+
+    setPreviewUrl(null);
   };
 
   const onPreviewFileIconClick = (file) => {
-    URL.revokeObjectURL(previewUrl);
+    // when u upload 2 files and click preview of one of them for the 1st time then previewUrl will be null (when you click preview icon 2nd time of the another file then previewUrl will be string - string of the previously clicked item preview)
+    previewUrl && URL.revokeObjectURL(previewUrl);
     const url = URL.createObjectURL(file.file);
     setPreviewUrl(url);
   };
@@ -298,12 +306,17 @@ export const SinglePDFWithPreviw = () => {
   };
 
   const onDeleteIconClick = (id: string) => {
+    // if you set file and then you delete it (without clicking on preview icon) then previewUrl won't exist
     previewUrl && URL.revokeObjectURL(previewUrl);
+
     setFile([]);
+    setPreviewUrl(null);
   };
 
-  const onPreviewFileIconClick = (file) => {
-    URL.revokeObjectURL(previewUrl);
+  const onPreviewFileIconClick = (file: ExtendedFile) => {
+    // if you click for the 1st time on preview icon previewUrl is null
+    previewUrl && URL.revokeObjectURL(previewUrl);
+
     const url = URL.createObjectURL(file.file);
     setPreviewUrl(url);
   };

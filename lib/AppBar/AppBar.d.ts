@@ -1,4 +1,8 @@
 /// <reference types="react" />
+export declare const appBarMenuTestid = "appBar-Menu";
+export declare const appBarShowMoreBtnTestid = "appBar-showMoreBtn";
+export declare const appBarNotificationsBtn = "appBar-notificationsBtn";
+export declare const appBarNotificationsBadge = "appBar-notificationsBadge";
 export interface AppBarProps {
     logo?: React.ReactNode;
     userData: {

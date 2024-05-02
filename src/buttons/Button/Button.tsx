@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 import { StyledButton, StyledWrapper, CircularProgress } from "./Button.styled";
 
+export const circularProgressDataTestid = "btn-CircularProgress";
+
 export type TextTransform =
   | "capitalize"
   | "lowercase"
@@ -22,7 +24,9 @@ export interface ButtonAsLinksProps {
 
 export interface ButtonProps extends MuiButtonProps, ButtonAsLinksProps {
   isLoading?: boolean;
-  onClickPromise?: () => Promise<void>;
+  onClickPromise?: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => Promise<any>;
   textTransform?: TextTransform;
   /**
    * component prop describes underlaying HTML tag.
@@ -65,7 +69,7 @@ const Button = forwardRef(
       if (onClickPromise) {
         setIsPromiseLoading(true);
         try {
-          await onClickPromise();
+          await onClickPromise(e);
           setIsPromiseLoading(false);
         } catch (err) {
           setIsPromiseLoading(false);
@@ -92,6 +96,7 @@ const Button = forwardRef(
           <CircularProgress
             color={color}
             size={size === "large" ? 20 : size === "medium" ? 18 : 16}
+            data-testid={circularProgressDataTestid}
           />
         )}
       </StyledWrapper>

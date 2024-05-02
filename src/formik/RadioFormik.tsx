@@ -15,6 +15,9 @@ export interface RadioFormikProps
   labelPlacement?: FormControlLabelProps["labelPlacement"];
 }
 
+/**
+ * Radio buttons are used when user HAS TO select exactly one value among set with couple of values and it's not possible to not select anything. User has to select something and then can't unselect it later.
+ */
 const RadioFormik = ({
   label,
   labelPlacement,

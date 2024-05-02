@@ -2,7 +2,7 @@ import { Meta } from "@storybook/react/types-6-0";
 import { Story } from "@storybook/react";
 import { BrowserRouter } from "react-router-dom";
 import { ArgType } from "../types/storybookArgs";
-
+import FlagWrapper from "../src/LangSwitcher/FlagFrapper";
 import LangSwitcher, { LangSwitcherProps } from "../src/LangSwitcher";
 
 type Lang = "pl" | "de" | "en";
@@ -26,22 +26,6 @@ const Template: Story<LangSwitcherProps<Lang>> = (args) => (
     <LangSwitcher {...args} />
   </BrowserRouter>
 );
-
-const FlagWrapper = ({ src, alt }: { src: string; alt: string }) => {
-  return (
-    <div
-      style={{
-        width: 20, // set the same height as width if want to use in appBar
-        height: 20, // because when click on lang btn, MUI will create oval clicked shape (should be circle)
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <img src={src} alt={alt} width={20} />
-    </div>
-  );
-};
 
 export const Basic = Template.bind({});
 Basic.args = {

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { AutocompleteProps as MuiAutocompleteProps } from "@mui/material/Autocomplete";
 import { TextFieldProps } from "../TextField";
 export interface Option {

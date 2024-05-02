@@ -15,6 +15,17 @@ import {
 } from "./SidebarMenuItem.styled";
 import { useLocation } from "react-router-dom";
 
+export const bottomLineWrapperTestId = "bottomLineWrapperTestId";
+/**
+ * It's used for icon when dropdown is expanded so this icon indicates that when clicked the dropdown would collapse
+ */
+export const expandLessIconTestId = "expandLessIconTestId";
+/**
+ * It's used for icon when dropdown is collapsed so this icon indicates that when clicked the dropdown would expand
+ */
+export const expandMoreIconTestId = "expandMoreIconTestId";
+export const dropdownCollapsableWrapper = "dropdownCollapsableWrapper";
+
 export interface SidebarMenuItemWithoutDropdown {
   variant: "no-dropdown";
   icon: React.ReactNode;
@@ -40,6 +51,7 @@ export type SidebarMenuItemProps =
 
 const SidebarMenuItem = (props: SidebarMenuItemProps) => {
   const location = useLocation();
+
   const isSubmenuExpandedByDefault =
     props.variant === "with-dropdown"
       ? props.dropdownItems.some((item) => location.pathname.includes(item.to))
@@ -58,11 +70,11 @@ const SidebarMenuItem = (props: SidebarMenuItemProps) => {
         <StyledListItemText primary={props.label} color="#ffffff" />
         {isSubmenuOpen ? (
           <ColoredIconWrapper color="grey">
-            <ExpandLess />
+            <ExpandLess data-testid={expandLessIconTestId} />
           </ColoredIconWrapper>
         ) : (
           <ColoredIconWrapper color="grey">
-            <ExpandMore />
+            <ExpandMore data-testid={expandMoreIconTestId} />
           </ColoredIconWrapper>
         )}
       </StyledListItemButton>
@@ -71,6 +83,7 @@ const SidebarMenuItem = (props: SidebarMenuItemProps) => {
         in={navigator.userAgent === "ReactSnap" ? true : isSubmenuOpen}
         timeout="auto"
         unmountOnExit
+        data-testid={dropdownCollapsableWrapper}
       >
         <List component="div" disablePadding>
           {props.dropdownItems.map((item, index) => (
@@ -81,7 +94,7 @@ const SidebarMenuItem = (props: SidebarMenuItemProps) => {
         </List>
       </Collapse>
       {props.renderBottomLine && (
-        <StyledDividerWrapper>
+        <StyledDividerWrapper data-testid={bottomLineWrapperTestId}>
           <StyledDivider />
         </StyledDividerWrapper>
       )}
@@ -93,7 +106,7 @@ const SidebarMenuItem = (props: SidebarMenuItemProps) => {
         <StyledListItemText primary={props.label} />
       </StyledLink>
       {props.renderBottomLine && (
-        <StyledDividerWrapper>
+        <StyledDividerWrapper data-testid={bottomLineWrapperTestId}>
           <StyledDivider />
         </StyledDividerWrapper>
       )}

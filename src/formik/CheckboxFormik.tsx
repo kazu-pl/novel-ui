@@ -21,6 +21,11 @@ export interface CheckboxFormikProps
   labelPlacement?: FormControlLabelProps["labelPlacement"];
 }
 
+/**
+ * This component can be used to allow user to select couple of values (or even to not select anything at all) from a set of some values.
+ *
+ * It also can be used as a button with some agreement and user can select it (if they agree) or deselect (if they disagree - radio would not be the best choice for that purpose because radio can't be and shouldn't be unselected).
+ */
 const CheckboxFormik = ({
   label,
   labelPlacement = "end",

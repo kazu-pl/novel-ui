@@ -9,6 +9,73 @@ It was developed with node **14.18.2** and to run this project, you have to swit
 1 - use node `18.12.1` and build this library. There will be an error and you have to resolve it (README already contains the solution, it's titled `Error: Package subpath './package.json' is not defined by "exports"`).There will be also another error `(!) Plugin rpt2: You are using a Rollup version '<2.60.0'. This may result in type-only files being ignored.d.` so you have to check if this another error was also present when using older node version (like 14.18.2)
 2 - remove charts `react-chartjs-2` and others as they are not even used anymore
 
+# How to display `...` at the end of text if the text is too long:
+
+In short you have to add the following styles to the tag rendering text:
+
+```css
+.text-wrapper {
+  /* the CSS function that renders "..." characters if text is too long is text-overflow: ellipsis; */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+```
+
+Let's say you have this React/HTML/JSX structure:
+
+```tsx
+const RenderTest = () => {
+  return (
+    <StyledAttachmentWrapper>
+      <GetAppIcon className="AttachmentsSection__linkIcon" />
+
+      <Box
+        display={"flex"}
+        flexDirection={"column"}
+        justifyContent={"center"}
+        alignItems={"flexStart"}
+        ml={"8px"}
+        className="AttachmentsSection__textsWrapper"
+      >
+        <StyledTypography className="AttachmentsSection__downloadText">
+          {t("download")}
+        </StyledTypography>
+        <StyledTypography className="AttachmentsSection__fileName">
+          {/* BELOW GOES THE TEXT */}
+          {attachment.fileName}
+        </StyledTypography>
+      </Box>
+    </StyledAttachmentWrapper>
+  );
+};
+```
+
+Then your styles should look like this:
+
+```ts
+import styled from "styled-components";
+
+export const StyledAttachmentWrapper = styled.button`
+  &&& {
+    max-width: 100%;
+
+    .AttachmentsSection__textsWrapper {
+      /* 24px is AttachmentsSection__linkIcon icon width, 8px is  AttachmentsSection__textsWrapper margin-left */
+
+      width: calc(100% - 24px - 8px);
+    }
+
+    & .AttachmentsSection__fileName {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
+    }
+  }
+`;
+```
+
 # How to pass `data-` prop (for example `data-testid`) to nested component via its props object prop like `PaperProps`:
 
 Example below:
